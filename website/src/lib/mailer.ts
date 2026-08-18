@@ -1,15 +1,12 @@
 import 'server-only';
 
-import fs from 'node:fs';
-import path from 'node:path';
 import nodemailer from 'nodemailer';
 
 import { getSmtpSettings, isSmtpConfigured, type SmtpSettings } from './settings';
 import { LOGO_CID, anfrageHtml, autoReplyHtml, testMailHtml } from './mail-template';
+import { mailLogoBuffer } from './mail-logo';
 
 /** Versand über den im Admin hinterlegten SMTP-Server. */
-
-const LOGO_PFAD = path.join(process.cwd(), 'public', 'mail', 'logo-icon.png');
 
 /**
  * Das Logo reist als Anhang mit und wird im HTML über `cid:` eingebunden.
@@ -20,16 +17,18 @@ const LOGO_PFAD = path.join(process.cwd(), 'public', 'mail', 'logo-icon.png');
  * Bild dem Absender, wann und wo die Mail geöffnet wurde; genau das wollen wir
  * bei einer Eingangsbestätigung nicht.
  *
- * Fehlt die Datei (etwa weil `scripts/build-mail-logo.mjs` nie lief), geht die
- * Mail ohne Anhang hinaus statt den Versand scheitern zu lassen.
+ * Die Grafik steckt als Base64-Konstante im Quelltext, nicht als Datei auf der
+ * Platte. Ein Anhang, der zur Laufzeit fehlt, käme beim Empfänger als kaputtes
+ * Bildsymbol an – und genau das ist schwer zu bemerken, weil der Versand
+ * trotzdem gelingt.
  */
 function logoAnhang() {
-  if (!fs.existsSync(LOGO_PFAD)) return [];
   return [
     {
       filename: 'nexo-it.png',
-      path: LOGO_PFAD,
+      content: mailLogoBuffer(),
       cid: LOGO_CID,
+      contentType: 'image/png',
       contentDisposition: 'inline' as const,
     },
   ];
