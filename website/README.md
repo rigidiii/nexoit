@@ -192,6 +192,15 @@ Weitere Dateien im Ordner `deploy/`:
 | `nginx-redirect-nexo-it.conf` | 301-Weiterleitung von nexo-it.de |
 | `../ecosystem.config.cjs` | PM2-Prozesskonfiguration |
 
+### Update auf dem Server
+
+```bash
+cd /www/wwwroot/nexoit.de && git pull && cd website && npm run build && pm2 reload nexoit-web
+```
+
+`npm ci` nur dann dazwischen, wenn `git pull` eine Änderung an `package-lock.json`
+meldet – der Befehl löscht `node_modules` und baut das native `better-sqlite3` neu.
+
 **Sicherung:** Die gesamte Anwendungsdatenbank liegt in `data/nexo.db` (plus
 `-wal`/`-shm` im laufenden Betrieb). Für ein konsistentes Backup:
 

@@ -400,13 +400,26 @@ Diese Punkte sind noch offen und gehören erledigt, bevor die Seite beworben wir
 cd /www/wwwroot/nexoit.de
 git pull
 cd website
-npm ci
 npm run build
 pm2 reload nexoit-web
 ```
 
 `pm2 reload` statt `restart`: Der alte Prozess bleibt stehen, bis der neue
 Anfragen annimmt – dadurch entsteht keine Lücke.
+
+**`npm ci` nur, wenn sich die Abhängigkeiten geändert haben.** Die Ausgabe von
+`git pull` verrät es: Taucht dort `package-lock.json` auf, vor dem Build
+zusätzlich `npm ci` ausführen. Sonst weglassen – der Befehl löscht
+`node_modules` vollständig und baut es neu auf, samt Kompilierung des nativen
+`better-sqlite3`. Das kostet Zeit und schafft eine Fehlerquelle, wo vorher
+keine war.
+
+Kontrolle nach dem Update:
+
+```bash
+pm2 status
+curl -sI http://127.0.0.1:3100 | head -1
+```
 
 ---
 
