@@ -14,26 +14,33 @@ stehen, und der Reverse-Proxy funktioniert erst, wenn der Node-Prozess läuft.
 
 ## 1. DNS vorbereiten
 
-Beim Domain-Anbieter vier A-Records auf die Server-IP setzen:
+Webserver: **159.195.224.228**. Der Mailserver läuft getrennt davon auf
+152.53.85.141 und bleibt unberührt.
 
-| Name | Typ | Ziel |
-|---|---|---|
-| `nexoit.de` | A | Server-IP |
-| `www.nexoit.de` | A | Server-IP |
-| `nexo-it.de` | A | Server-IP |
-| `www.nexo-it.de` | A | Server-IP |
+| Name | Typ | Ziel | Status |
+|---|---|---|---|
+| `@` (nexoit.de) | A | 159.195.224.228 | vorhanden |
+| **`www`** | **A** | **159.195.224.228** | **fehlt – anlegen** |
+| `nexo-it.de` | A | 159.195.224.228 | eigene Zone, für die Weiterleitung |
+| `www.nexo-it.de` | A | 159.195.224.228 | eigene Zone, für die Weiterleitung |
 
-Die beiden `nexo-it.de`-Einträge werden gebraucht, damit Let's Encrypt auch für
-die Weiterleitungsdomain ein Zertifikat ausstellen kann.
+Ohne den `www`-Eintrag ist `www.nexoit.de` überhaupt nicht auflösbar. Let's
+Encrypt kann dafür dann kein Zertifikat ausstellen, und die kanonische Adresse
+der Seite läuft ins Leere.
+
+Die vorhandenen Mail-Einträge passen zum Versandweg der Anwendung: `v=spf1 mx
+-all` autorisiert den MX-Host `mail.nexoit.de`, und genau darüber verschickt
+das Kontaktformular. Der Webserver sendet nicht selbst. Wird im Admin später
+ein anderer Postausgangsserver eingetragen, muss dessen IP zusätzlich in den
+SPF-Record – sonst landen die Mails wegen `-all` im Spam.
 
 Prüfen, bevor es weitergeht:
 
 ```bash
-dig +short www.nexoit.de A
+dig +short www.nexoit.de A      # erwartet: 159.195.224.228
 ```
 
-Erscheint die Server-IP, ist die Verbreitung durch. Das kann bis zu einigen
-Stunden dauern.
+Bis zur Verbreitung können je nach TTL einige Stunden vergehen.
 
 ---
 
@@ -237,26 +244,40 @@ Der Server lauscht ausschließlich auf `127.0.0.1`. Aus dem Internet ist Port
 
 ## 8. Reverse-Proxy einrichten
 
-**Website → nexoit.de → Konfigurationsdatei** öffnen und nach der Vorlage in
-[`nginx-nexoit.conf`](nginx-nexoit.conf) anpassen. Kurzfassung:
+**Website → nexoit.de → Konfigurationsdatei** öffnen und den gesamten Inhalt
+durch [`nginx-nexoit.de.conf`](nginx-nexoit.de.conf) ersetzen. Die Datei ist
+fertig ausgefüllt und enthält die von aaPanel verwalteten Abschnitte
+unverändert, das Panel findet seine Markierungen also wieder.
 
-1. Die beiden `location ~ .*\.(gif|jpg|...)$` und `location ~ .*\.(js|css)?$`
-   **löschen**. Sie liefern statische Dateien von der Festplatte aus – bei
-   dieser Anwendung liegt dort aber nichts. Bleiben sie stehen, antwortet nginx
-   auf `/_next/static/...` mit 404 und die Seite erscheint ohne Gestaltung.
-   Das ist mit Abstand der häufigste Fehler bei diesem Setup.
-2. Die Zeile `include enable-php-84.conf;` löschen.
-3. Den `location ^~ / { proxy_pass ... }`-Block aus der Vorlage einsetzen.
+Danach **SSL erneut beantragen**, diesmal mit beiden Domains – das bestehende
+Zertifikat gilt nur für `nexoit.de`, nicht für `www`.
+
+Was sich gegenüber der Standardfassung ändert:
+
+| Änderung | Grund |
+|---|---|
+| `server_name nexoit.de www.nexoit.de;` | vorher fehlte `www` – Aufrufe wären auf der Standard-Site des Servers gelandet |
+| Proxy-Blöcke `^~ /` und `^~ /_next/static/` ergänzt | vorher gab es überhaupt keinen Reverse-Proxy |
+| `location ~ .*\.(gif\|jpg\|…)$` und `location ~ .*\.(js\|css)?$` gelöscht | **wichtigster Punkt** – siehe unten |
+| `root` auf `…/website/public` | damit im Auslieferungsverzeichnis nicht `.env`, `.git` und die Datenbank liegen |
+| `301` von `nexoit.de` auf `www.nexoit.de` | eine kanonische Adresse statt zweier konkurrierender |
+| `ssl_protocols` ohne `TLSv1.1` | seit RFC 8996 überholt |
+| `add_header Strict-Transport-Security` entfernt | den Header setzt die Anwendung selbst, sonst kommt er doppelt |
+| `include enable-php-00.conf;` entfernt | es läuft kein PHP |
+
+Zu den beiden gelöschten Regex-Blöcken: Sie liefern `.js`, `.css` und Bilder
+direkt von der Festplatte aus. Bei einer Next.js-Anwendung liegt dort aber
+nichts – Skripte und Stile kommen unter `/_next/static/` aus dem Node-Prozess.
+Bleiben die Blöcke stehen, antwortet nginx darauf mit 404 und die Seite
+erscheint völlig ohne Gestaltung. Reguläre Ausdrücke werden vor
+Präfix-Locations geprüft, deshalb hilft der Proxy dagegen nicht. Das ist mit
+Abstand der häufigste Fehler bei diesem Setup.
 
 Danach prüfen und übernehmen:
 
 ```bash
 nginx -t && nginx -s reload
 ```
-
-Alternativ geht auch **Website → nexoit.de → Reverse proxy** über die
-Oberfläche (Ziel `http://127.0.0.1:3000`, **Cache aus**). Die beiden
-Regex-Blöcke aus Punkt 1 müssen aber auch dann von Hand verschwinden.
 
 ---
 

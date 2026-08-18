@@ -57,7 +57,20 @@ const nextConfig = {
             key: 'Permissions-Policy',
             value: 'camera=(), microphone=(), geolocation=(), interest-cohort=(), browsing-topics=()',
           },
-          { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
+          // Bewusst ohne `includeSubDomains` und `preload`.
+          //
+          // `includeSubDomains` zwingt ALLE Subdomains dauerhaft auf HTTPS –
+          // also auch mail., auth., wiki., autodiscover. und autoconfig.
+          // Hat davon eine kein gültiges Zertifikat, verweigern Browser den
+          // Zugriff darauf, und zwar für die volle Laufzeit des Headers.
+          // `preload` ist zusätzlich praktisch unumkehrbar: die Domain landet
+          // in einer fest in die Browser eingebauten Liste.
+          //
+          // Erst aktivieren, wenn nachweislich jede Subdomain sauber über
+          // HTTPS erreichbar ist. Dann auf
+          //   'max-age=63072000; includeSubDomains; preload'
+          // erhöhen und die Domain unter hstspreload.org anmelden.
+          { key: 'Strict-Transport-Security', value: 'max-age=31536000' },
           { key: 'X-DNS-Prefetch-Control', value: 'off' },
         ],
       },

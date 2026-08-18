@@ -188,7 +188,7 @@ Weitere Dateien im Ordner `deploy/`:
 | Datei | Zweck |
 |---|---|
 | `AAPANEL.md` | vollständige Installationsanleitung |
-| `nginx-nexoit.conf` | Reverse-Proxy-Block für die Hauptdomain |
+| `nginx-nexoit.de.conf` | Reverse-Proxy-Block für die Hauptdomain |
 | `nginx-redirect-nexo-it.conf` | 301-Weiterleitung von nexo-it.de |
 | `../ecosystem.config.cjs` | PM2-Prozesskonfiguration |
 
