@@ -107,31 +107,40 @@ Den ausgegebenen öffentlichen Schlüssel auf GitHub eintragen:
 **Repository `rigidiii/nexoit` → Settings → Deploy keys → Add deploy key**.
 Titel frei wählbar, **„Allow write access" NICHT ankreuzen**.
 
-SSH-Zugang für diesen Schlüssel festlegen:
+Verbindung testen. Wichtig: `-i` gehört an `ssh` selbst – die Variable
+`GIT_SSH_COMMAND` wertet nur git aus, `ssh` ignoriert sie:
 
 ```bash
-cat >> /root/.ssh/config <<'EOF'
-
-Host github.com-nexoit
-  HostName github.com
-  User git
-  IdentityFile /root/.ssh/nexoit_deploy
-  IdentitiesOnly yes
-EOF
-chmod 600 /root/.ssh/config
-ssh -T git@github.com-nexoit    # erwartet: "You've successfully authenticated"
+ssh -i /root/.ssh/nexoit_deploy -o IdentitiesOnly=yes -T git@github.com
 ```
 
-Klonen. aaPanel hat im Website-Verzeichnis Platzhalterdateien abgelegt, die
-vorher weg müssen – `git clone` verlangt ein leeres Ziel:
+Erwartet: „successfully authenticated, but GitHub does not provide shell
+access".
+
+Klonen. aaPanel legt im Website-Verzeichnis Platzhalterdateien ab, die vorher
+weg müssen – `git clone` verlangt ein leeres Ziel. Auf `.user.ini` setzt das
+Panel zusätzlich das Immutable-Flag, sonst schlägt schon das Löschen fehl:
 
 ```bash
+chattr -i /www/wwwroot/nexoit.de/.user.ini 2>/dev/null
 rm -rf /www/wwwroot/nexoit.de
-git clone git@github.com-nexoit:rigidiii/nexoit.git /www/wwwroot/nexoit.de
-ls /www/wwwroot/nexoit.de     # erwartet: website  design_handoff_nexo_it_website
+GIT_SSH_COMMAND="ssh -i /root/.ssh/nexoit_deploy -o IdentitiesOnly=yes" \
+  git clone git@github.com:rigidiii/nexoit.git /www/wwwroot/nexoit.de
 ```
 
-Die Anwendung liegt also unter `/www/wwwroot/nexoit.de/website`.
+**Den Schlüssel anschließend dauerhaft hinterlegen.** `GIT_SSH_COMMAND` gilt
+nur für den einen Aufruf – ohne diesen Schritt scheitert jedes spätere
+`git pull` mit „Permission denied (publickey)":
+
+```bash
+cd /www/wwwroot/nexoit.de
+git config core.sshCommand "ssh -i /root/.ssh/nexoit_deploy -o IdentitiesOnly=yes"
+git pull        # Probelauf: muss "Already up to date." melden
+```
+
+Die Einstellung steht in `.git/config` und gilt nur für dieses Repository.
+
+Die Anwendung liegt unter `/www/wwwroot/nexoit.de/website`.
 
 ---
 
@@ -436,6 +445,7 @@ Kopie inkonsistent, weil parallel geschrieben werden kann.
 | **`APP_SECRET fehlt oder ist zu kurz`** beim Start | `.env` nicht gefunden oder Wert zu kurz | Datei muss in `/www/wwwroot/nexoit.de/website/.env` liegen, mindestens 32 Zeichen |
 | **SMTP-Passwort plötzlich falsch** | `APP_SECRET` wurde geändert | Passwort unter `/admin/smtp` neu eingeben |
 | **`SQLITE_CANTOPEN`** | Verzeichnis fehlt oder ist schreibgeschützt | `mkdir -p /www/nexoit-data && chmod 700 /www/nexoit-data` |
+| **`git pull`: Permission denied (publickey)** | Der Deploy-Key ist nur für den einmaligen `clone` gesetzt worden | `git config core.sshCommand "ssh -i /root/.ssh/nexoit_deploy -o IdentitiesOnly=yes"` im Repository, siehe Schritt 4 |
 | **Let's Encrypt schlägt fehl** | DNS zeigt noch nicht auf den Server | `dig +short www.nexoit.de A` prüfen, dann erneut versuchen |
 | **Build bricht ohne Meldung ab** | Arbeitsspeicher erschöpft | Auslagerungsspeicher, Schritt 2 |
 
