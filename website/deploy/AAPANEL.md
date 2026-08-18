@@ -223,6 +223,19 @@ npm prune --omit=dev
 
 ## 7. Anwendung als Dienst starten
 
+Zuerst prüfen, ob der Port frei ist. Die Anwendung läuft auf **3100** –
+bewusst nicht auf 3000, weil den auf Servern mit mehreren Diensten fast immer
+schon jemand belegt (Outline, Grafana und viele Node-Anwendungen nutzen ihn
+als Voreinstellung):
+
+```bash
+ss -lntp | grep ":3100" || echo "Port 3100 ist frei"
+```
+
+Ist er belegt, in `ecosystem.config.cjs`, `package.json` und der
+nginx-Konfiguration einen freien Port eintragen – alle drei müssen
+übereinstimmen.
+
 ```bash
 cd /www/wwwroot/nexoit.de/website
 pm2 start ecosystem.config.cjs
@@ -234,7 +247,7 @@ Prüfen, ob der Prozess antwortet:
 
 ```bash
 pm2 status
-curl -I http://127.0.0.1:3000               # erwartet: HTTP/1.1 200 OK
+curl -I http://127.0.0.1:3100               # erwartet: HTTP/1.1 200 OK
 ```
 
 Der Server lauscht ausschließlich auf `127.0.0.1`. Aus dem Internet ist Port
@@ -416,6 +429,7 @@ Kopie inkonsistent, weil parallel geschrieben werden kann.
 | Symptom | Ursache | Abhilfe |
 |---|---|---|
 | **502 Bad Gateway** | Node-Prozess läuft nicht | `pm2 status`, `pm2 logs nexoit-web --lines 50` |
+| **Seite zeigt eine fremde Anwendung** | Ein anderer Dienst belegt den Port, nginx reicht ahnungslos an ihn weiter. `pm2 status` zeigt dann `errored` mit vielen Neustarts | `ss -lntp | grep ":3100"` – Port wechseln, siehe Schritt 7 |
 | **Seite ohne Gestaltung, `/_next/...` liefert 404** | Regex-Blöcke für js/css/Bilder noch in der nginx-Konfiguration | Schritt 8, Punkt 1 |
 | **`listen EADDRNOTAVAIL`** | Linux setzt die Umgebungsvariable `HOSTNAME` auf den Rechnernamen, Next.js versucht darauf zu lauschen | Wird durch `-H 127.0.0.1` in `ecosystem.config.cjs` verhindert – Datei nicht ändern |
 | **Statistik zeigt dauerhaft 1 Besucher** | `TRUST_PROXY` fehlt oder nginx sendet `X-Forwarded-For` nicht | Schritt 5 und 8 |
