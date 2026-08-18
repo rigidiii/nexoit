@@ -75,6 +75,42 @@ export function ServiceIconSvg({ name }: { name: ServiceIcon }) {
   );
 }
 
+/**
+ * Symbole für die Orbit-Grafik im Hero: Server, Netzwerk, Cloud, Sicherheit,
+ * Datenbank. Gleicher Zeichenstil wie die Leistungs-Icons, damit die Grafik
+ * nicht wie ein Fremdkörper wirkt.
+ */
+export type OrbitIcon = 'server' | 'network' | 'cloud' | 'shield' | 'database';
+
+const orbitPaths: Record<OrbitIcon, React.ReactNode> = {
+  server: servicePaths.server,
+  shield: servicePaths.shield,
+  network: (
+    <>
+      <circle cx="12" cy="4.5" r="2" />
+      <circle cx="5" cy="19.5" r="2" />
+      <circle cx="19" cy="19.5" r="2" />
+      <path d="M12 6.5v5M12 11.5 6.2 17.9M12 11.5l5.8 6.4" />
+    </>
+  ),
+  cloud: <path d="M6.5 19a4.5 4.5 0 0 1-.5-8.97A6 6 0 0 1 17.7 9.4 3.8 3.8 0 0 1 17.5 19H6.5z" />,
+  database: (
+    <>
+      <ellipse cx="12" cy="6" rx="7" ry="3" />
+      <path d="M5 6v6c0 1.66 3.13 3 7 3s7-1.34 7-3V6" />
+      <path d="M5 12v6c0 1.66 3.13 3 7 3s7-1.34 7-3v-6" />
+    </>
+  ),
+};
+
+export function OrbitIconSvg({ name }: { name: OrbitIcon }) {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false" {...strokeProps}>
+      {orbitPaths[name]}
+    </svg>
+  );
+}
+
 export function EyeIcon() {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false" {...strokeProps}>

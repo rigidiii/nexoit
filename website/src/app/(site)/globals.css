@@ -59,6 +59,17 @@ html {
   /* Sticky-Header nicht über Ankerziele legen. */
   scroll-padding-top: 84px;
   -webkit-text-size-adjust: 100%;
+
+  /* Nichts darf die Seite waagerecht scrollbar machen.
+     Auslöser wäre sonst der Startzustand der Einflug-Animationen: Elemente
+     mit data-fly="right" stehen vor dem Einblenden 90 px weiter rechts und
+     vergrößern damit den scrollbaren Bereich – man kann die Seite nach links
+     ziehen und sieht rechts einen weißen Streifen.
+
+     `clip` statt `hidden`, weil `clip` keinen Scroll-Container erzeugt.
+     Mit `hidden` würde die senkrechte Achse implizit auf `auto` springen und
+     der Sticky-Header verlöre seinen Bezugsrahmen. */
+  overflow-x: clip;
 }
 
 body {
@@ -69,6 +80,8 @@ body {
   font-size: 16px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  /* Rückfallebene für Safari vor Version 16, das `overflow: clip` noch nicht
+     kennt. Dort greift die alte Regel. */
   overflow-x: hidden;
 }
 
@@ -447,6 +460,12 @@ svg {
   inset: 0;
   z-index: 3;
   pointer-events: none;
+  /* Ein <canvas> ist ein ersetztes Element: `inset: 0` streckt es nicht,
+     es behält die Breite aus seinem width-Attribut. Ohne diese beiden Zeilen
+     bleibt es nach dem Verkleinern des Fensters zu breit, bis der
+     ResizeObserver nachzieht. */
+  width: 100%;
+  height: 100%;
 }
 
 .nx-hero__inner {
@@ -575,27 +594,28 @@ svg {
   border: 1px solid rgba(255, 255, 255, 0.35);
   animation: nx-pulse 3.6s ease-out infinite;
 }
-.nx-badge {
+/* IT-Symbole rund um die Wortmarke.
+   Zwei verschachtelte Elemente, weil beide eine eigene `transform` brauchen:
+   das äußere setzt die Position auf dem Ring, das innere schwebt. In einer
+   einzigen Regel würde die Animation die Positionierung überschreiben. */
+.nx-chip {
   position: absolute;
-  padding: 13px 17px;
-  border-radius: 14px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) translate(var(--chip-x, 0), var(--chip-y, 0));
+}
+.nx-chip__tile {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 15px;
   background: rgba(255, 255, 255, 0.07);
   border: 1px solid var(--glass-line);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  font-size: 13px;
-  font-weight: 600;
-  white-space: nowrap;
-}
-.nx-badge--top {
-  top: 24px;
-  right: 0;
+  color: #fff;
   animation: nx-float 9s ease-in-out infinite;
-}
-.nx-badge--bottom {
-  bottom: 40px;
-  left: 0;
-  animation: nx-float 11s ease-in-out infinite;
 }
 
 /* --------------------------------------------------------------------------
@@ -1547,12 +1567,6 @@ button[disabled],
   .nx-value {
     padding: 34px 30px;
   }
-  .nx-badge--top {
-    right: 8px;
-  }
-  .nx-badge--bottom {
-    left: 8px;
-  }
 }
 
 /* < 768 px */
@@ -1613,9 +1627,10 @@ button[disabled],
     height: 320px;
     transform: scale(0.74);
   }
-  .nx-badge {
-    font-size: 12px;
-    padding: 10px 13px;
+  .nx-chip__tile {
+    width: 42px;
+    height: 42px;
+    border-radius: 13px;
   }
 
   .nx-services__grid,
@@ -1690,7 +1705,7 @@ button[disabled],
   .nx-orbit--inner,
   .nx-orbit__core,
   .nx-orbit__core span,
-  .nx-badge,
+  .nx-chip__tile,
   .nx-hero__title,
   .nx-beam {
     animation: none !important;

@@ -37,7 +37,19 @@ export const hero = {
     { value: 'DSGVO', label: 'Hosting in der EU' },
     { value: 'Full Service', label: 'Web & Infrastruktur' },
   ],
-  badges: ['Server online · 99,9 %', 'Backup abgeschlossen'],
+  /**
+   * Symbole, die im Hero um die Wortmarke kreisen. Rein dekorativ – die
+   * Grafik ist als Ganzes `aria-hidden`. Die Koordinaten sind Verschiebungen
+   * vom Mittelpunkt in Pixeln und liegen auf einem Kreis mit Radius 150,
+   * also genau auf dem gestrichelten Innenring.
+   */
+  orbitIcons: [
+    { icon: 'server', x: 0, y: -150, float: 8 },
+    { icon: 'network', x: 143, y: -46, float: 9.5 },
+    { icon: 'cloud', x: 88, y: 121, float: 11 },
+    { icon: 'shield', x: -88, y: 121, float: 8.5 },
+    { icon: 'database', x: -143, y: -46, float: 10 },
+  ],
 } as const;
 
 export const marqueeItems = [

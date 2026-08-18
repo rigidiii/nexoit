@@ -1,6 +1,6 @@
 import { hero } from '@/content/site';
 import HeroTrail from './HeroTrail';
-import { NexoMark } from './Icons';
+import { NexoMark, OrbitIconSvg, type OrbitIcon } from './Icons';
 
 /**
  * Hero-Bereich.
@@ -64,8 +64,19 @@ export default function Hero() {
             <NexoMark size={58} />
             <span />
           </div>
-          <div className="nx-badge nx-badge--top">{hero.badges[0]}</div>
-          <div className="nx-badge nx-badge--bottom">{hero.badges[1]}</div>
+
+          {/* IT-Symbole auf dem Innenring, rund um die Wortmarke. */}
+          {hero.orbitIcons.map((chip) => (
+            <span
+              key={chip.icon}
+              className="nx-chip"
+              style={{ '--chip-x': `${chip.x}px`, '--chip-y': `${chip.y}px` } as React.CSSProperties}
+            >
+              <span className="nx-chip__tile" style={{ animationDuration: `${chip.float}s` }}>
+                <OrbitIconSvg name={chip.icon as OrbitIcon} />
+              </span>
+            </span>
+          ))}
         </div>
       </div>
     </section>
