@@ -1,0 +1,1795 @@
+/* ==========================================================================
+   Nexo IT – Design-System
+   Werte 1:1 aus dem Design-Handoff (design_handoff_nexo_it_website/README.md).
+   Reihenfolge: Tokens → Reset → Primitive → Sektionen → Effekte → Responsive
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Design Tokens
+   -------------------------------------------------------------------------- */
+:root {
+  --accent: #0a5cff;
+  --accent-soft: #4e8cff;
+  --accent-pale: #8fb6ff;
+  --signal: #3be39a;
+  --ink: #14161a;
+  --ink-2: #1c1f26;
+  --paper: #ffffff;
+  --paper-2: #f5f7fa;
+  --line: rgba(20, 22, 26, 0.1);
+  --muted: #5c6270;
+
+  --on-dark-1: rgba(255, 255, 255, 0.72);
+  --on-dark-2: rgba(255, 255, 255, 0.55);
+  --on-dark-3: rgba(255, 255, 255, 0.45);
+  --glass: rgba(255, 255, 255, 0.06);
+  --glass-strong: rgba(255, 255, 255, 0.12);
+  --glass-line: rgba(255, 255, 255, 0.12);
+
+  --shadow-logo: 0 6px 20px rgba(10, 92, 255, 0.45);
+  --shadow-pill: 0 8px 24px rgba(10, 92, 255, 0.35);
+  --shadow-cta: 0 16px 40px rgba(10, 92, 255, 0.4);
+  --shadow-cta-hover: 0 22px 52px rgba(10, 92, 255, 0.55);
+  --shadow-core: 0 24px 70px rgba(10, 92, 255, 0.6);
+  --shadow-light: 0 20px 46px rgba(255, 255, 255, 0.18);
+  --shadow-progress: 0 0 14px rgba(10, 92, 255, 0.8);
+
+  --wrap: 1240px;
+  --gutter: 28px;
+  --section-y: 120px;
+
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-fly: cubic-bezier(0.16, 0.84, 0.24, 1);
+
+  --font-display: var(--font-sora), system-ui, sans-serif;
+  --font-body: var(--font-manrope), system-ui, sans-serif;
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset / Basis
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Sticky-Header nicht über Ankerziele legen. */
+  scroll-padding-top: 84px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--accent-soft);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  margin: 0;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+::selection {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Sichtbarer Fokus – im Prototyp nicht vorhanden, für Tastaturbedienung
+   aber erforderlich (WCAG 2.4.7). */
+:focus-visible {
+  outline: 3px solid var(--accent-soft);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.nx-dark :focus-visible {
+  outline-color: #fff;
+}
+
+.nx-skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 12px 20px;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 0 0 12px 0;
+  font-weight: 600;
+}
+.nx-skip:focus {
+  left: 0;
+  color: #fff;
+}
+
+.nx-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --------------------------------------------------------------------------
+   3. Layout-Primitive
+   -------------------------------------------------------------------------- */
+.nx-wrap {
+  max-width: var(--wrap);
+  margin: 0 auto;
+}
+
+.nx-section {
+  padding: var(--section-y) var(--gutter);
+}
+
+.nx-eyebrow {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.nx-h2 {
+  margin-top: 18px;
+  font-size: clamp(34px, 3.6vw, 52px);
+  line-height: 1.08;
+  font-weight: 700;
+}
+
+.nx-subline {
+  margin-top: 16px;
+  font-size: 18px;
+  color: var(--muted);
+}
+
+/* --------------------------------------------------------------------------
+   4. Buttons
+   -------------------------------------------------------------------------- */
+.nx-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  border: 0;
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+.nx-btn__arrow {
+  font-size: 19px;
+  line-height: 1;
+}
+
+.nx-btn--primary {
+  padding: 17px 30px;
+  border-radius: 14px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+  box-shadow: var(--shadow-cta);
+  transition:
+    transform 0.25s,
+    box-shadow 0.25s;
+}
+.nx-btn--primary:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-cta-hover);
+  color: #fff;
+}
+
+.nx-btn--ghost {
+  padding: 17px 30px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  background: transparent;
+  transition:
+    background 0.25s,
+    border-color 0.25s;
+}
+.nx-btn--ghost:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.45);
+  color: #fff;
+}
+
+.nx-btn--ink {
+  gap: 11px;
+  margin-top: 32px;
+  padding: 16px 28px;
+  border-radius: 13px;
+  background: var(--ink);
+  color: #fff;
+  font-weight: 600;
+  transition:
+    transform 0.25s,
+    background 0.25s;
+}
+.nx-btn--ink:hover {
+  transform: translateY(-2px);
+  background: var(--accent);
+  color: #fff;
+}
+
+.nx-btn--light {
+  gap: 11px;
+  padding: 17px 32px;
+  border-radius: 14px;
+  background: #fff;
+  color: var(--ink);
+  font-weight: 700;
+  transition:
+    transform 0.25s,
+    box-shadow 0.25s;
+}
+.nx-btn--light:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-light);
+  color: var(--ink);
+}
+
+/* --------------------------------------------------------------------------
+   5. Scroll-Progress
+   -------------------------------------------------------------------------- */
+.nx-progress {
+  position: fixed;
+  inset: 0 auto auto 0;
+  height: 3px;
+  width: 0;
+  z-index: 60;
+  background: linear-gradient(90deg, var(--accent), var(--accent-pale));
+  box-shadow: var(--shadow-progress);
+  will-change: width;
+}
+
+/* --------------------------------------------------------------------------
+   6. Header
+   -------------------------------------------------------------------------- */
+.nx-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  overflow: hidden;
+  background: rgba(20, 22, 26, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.nx-header__bar {
+  position: relative;
+  z-index: 2;
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 14px var(--gutter);
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.nx-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 0 0 auto;
+}
+.nx-logo__mark {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  background: var(--accent);
+  box-shadow: var(--shadow-logo);
+  flex: 0 0 auto;
+}
+.nx-logo__word {
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+.nx-logo__word b {
+  font-weight: 800;
+  color: var(--accent-soft);
+}
+
+.nx-nav {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+.nx-nav__link {
+  color: var(--on-dark-1);
+  font-size: 15px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.nx-nav__link:hover,
+.nx-nav__link[aria-current='true'] {
+  color: #fff;
+}
+
+.nx-pill {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: var(--shadow-pill);
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+.nx-pill:hover {
+  background: var(--accent-soft);
+  color: #fff;
+}
+
+/* Burger – im Design nicht vorhanden, für < 768 px ergänzt. */
+.nx-burger {
+  display: none;
+  /* flex: 0 0 44px, damit der Button als Flex-Kind nicht unter das
+     Mindest-Touch-Target von 44 px schrumpft. */
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 12px;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  place-items: center;
+}
+.nx-burger__box {
+  display: grid;
+  gap: 5px;
+  width: 18px;
+}
+.nx-burger__box i {
+  display: block;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  transition:
+    transform 0.25s var(--ease-out),
+    opacity 0.2s;
+}
+.nx-burger[aria-expanded='true'] .nx-burger__box i:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.nx-burger[aria-expanded='true'] .nx-burger__box i:nth-child(2) {
+  opacity: 0;
+}
+.nx-burger[aria-expanded='true'] .nx-burger__box i:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* --------------------------------------------------------------------------
+   7. Hero
+   -------------------------------------------------------------------------- */
+.nx-hero {
+  position: relative;
+  background: var(--ink);
+  color: #fff;
+  overflow: hidden;
+  padding: 120px var(--gutter) 140px;
+}
+
+.nx-hero__grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(120% 90% at 50% 10%, #000 30%, transparent 75%);
+  mask-image: radial-gradient(120% 90% at 50% 10%, #000 30%, transparent 75%);
+  z-index: 0;
+}
+
+.nx-hero__glow {
+  position: absolute;
+  left: 50%;
+  top: 20%;
+  width: 820px;
+  height: 820px;
+  margin: -410px 0 0 -410px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(10, 92, 255, 0.42), transparent 62%);
+  filter: blur(20px);
+  pointer-events: none;
+  transition: transform 0.6s var(--ease-out);
+  z-index: 1;
+}
+
+.nx-hero__beams {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 2;
+}
+.nx-beam {
+  position: absolute;
+  top: 0;
+  width: 1px;
+}
+.nx-beam--1 {
+  left: 18%;
+  height: 130px;
+  background: linear-gradient(180deg, transparent, rgba(143, 182, 255, 0.9), transparent);
+  animation: nx-beam 6s linear infinite;
+}
+.nx-beam--2 {
+  left: 52%;
+  height: 100px;
+  background: linear-gradient(180deg, transparent, rgba(143, 182, 255, 0.6), transparent);
+  animation: nx-beam 8.5s linear infinite 1.8s;
+}
+.nx-beam--3 {
+  left: 81%;
+  height: 150px;
+  background: linear-gradient(180deg, transparent, rgba(59, 227, 154, 0.55), transparent);
+  animation: nx-beam 7.4s linear infinite 3.2s;
+}
+
+/* Mausspur: über Raster, Glow und Beams, aber unter dem Inhalt (z-index 10).
+   Ohne Opazitäts-Übergang: die Spur läuft von selbst aus, indem ihre Punkte
+   altern. Ein zusätzliches Ein-/Ausblenden würde den Kopf am Zeiger beim
+   ersten Bewegen verzögert erscheinen lassen. */
+.nx-hero__trail {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.nx-hero__inner {
+  position: relative;
+  z-index: 10;
+  max-width: var(--wrap);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.nx-hero__title {
+  font-size: clamp(44px, 5.4vw, 78px);
+  line-height: 1.02;
+  font-weight: 700;
+  background: linear-gradient(100deg, #fff 20%, var(--accent-pale) 42%, #fff 62%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: nx-shine 7s linear infinite;
+}
+
+.nx-hero__sub {
+  margin-top: 26px;
+  font-size: 21px;
+  line-height: 1.55;
+  color: var(--on-dark-1);
+  max-width: 30ch;
+}
+
+.nx-hero__ctas {
+  margin-top: 38px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.nx-stats {
+  margin-top: 56px;
+  display: flex;
+  gap: 44px;
+  flex-wrap: wrap;
+}
+.nx-stats__value {
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.nx-stats__label {
+  font-size: 14px;
+  color: var(--on-dark-2);
+  margin-top: 4px;
+}
+
+/* Orbit-Grafik */
+.nx-orbits {
+  position: relative;
+  height: 480px;
+  display: grid;
+  place-items: center;
+  will-change: transform;
+}
+.nx-orbit {
+  position: absolute;
+  border-radius: 50%;
+}
+.nx-orbit--outer {
+  width: 420px;
+  height: 420px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: nx-spin 46s linear infinite;
+}
+.nx-orbit--outer span {
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  margin-left: -5px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  box-shadow: 0 0 18px var(--accent-soft);
+}
+.nx-orbit--inner {
+  width: 300px;
+  height: 300px;
+  border: 1px dashed rgba(255, 255, 255, 0.14);
+  animation: nx-spin 30s linear infinite reverse;
+}
+.nx-orbit--inner span {
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  margin-left: -4px;
+  border-radius: 50%;
+  background: var(--signal);
+  box-shadow: 0 0 16px var(--signal);
+}
+.nx-orbit--disc {
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle at 35% 30%, rgba(78, 140, 255, 0.35), rgba(10, 92, 255, 0.1));
+  border: 1px solid var(--glass-line);
+}
+.nx-orbit__core {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 112px;
+  height: 112px;
+  border-radius: 30px;
+  background: var(--accent);
+  box-shadow: var(--shadow-core);
+  animation: nx-float 7s ease-in-out infinite;
+}
+.nx-orbit__core span {
+  position: absolute;
+  inset: 0;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  animation: nx-pulse 3.6s ease-out infinite;
+}
+.nx-badge {
+  position: absolute;
+  padding: 13px 17px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid var(--glass-line);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.nx-badge--top {
+  top: 24px;
+  right: 0;
+  animation: nx-float 9s ease-in-out infinite;
+}
+.nx-badge--bottom {
+  bottom: 40px;
+  left: 0;
+  animation: nx-float 11s ease-in-out infinite;
+}
+
+/* --------------------------------------------------------------------------
+   8. Leistungs-Ticker
+   -------------------------------------------------------------------------- */
+.nx-marquee {
+  background: var(--accent);
+  color: #fff;
+  overflow: hidden;
+  padding: 15px 0;
+}
+.nx-marquee__track {
+  --nx-marquee-copies: 6;
+  display: flex;
+  width: max-content;
+  /* 34 s pro Kopienbreite – das im Handoff vorgegebene Tempo. */
+  animation: nx-marquee 34s linear infinite;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.nx-marquee__half {
+  display: flex;
+  gap: 44px;
+  padding-right: 44px;
+}
+
+/* --------------------------------------------------------------------------
+   9. Über uns
+   -------------------------------------------------------------------------- */
+.nx-about {
+  background: var(--paper);
+}
+.nx-about__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+.nx-about__sticky {
+  position: sticky;
+  top: 110px;
+}
+.nx-about__lead {
+  margin-top: 22px;
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+.nx-about__col {
+  display: grid;
+  gap: 26px;
+}
+.nx-about__p {
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+.nx-about__p--strong {
+  color: var(--ink);
+}
+.nx-about__quote {
+  padding: 26px 28px;
+  border-left: 3px solid var(--accent);
+  background: var(--paper-2);
+  border-radius: 0 14px 14px 0;
+  font-size: 18px;
+  line-height: 1.7;
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   10. Leistungen
+   -------------------------------------------------------------------------- */
+.nx-services {
+  background: var(--paper-2);
+  border-top: 1px solid var(--line);
+}
+.nx-services__head {
+  max-width: 760px;
+}
+.nx-services__head .nx-h2 span {
+  color: var(--muted);
+}
+.nx-services__grid {
+  margin-top: 56px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+/* Bewusst ohne Hover-Effekt (Vorgabe aus dem Handoff). */
+.nx-card {
+  position: relative;
+  padding: 34px 30px 30px;
+  border-radius: 20px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+.nx-card--dark {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+.nx-card__wash {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 90% at 85% 0%, rgba(10, 92, 255, 0.55), transparent 60%);
+}
+.nx-card__body {
+  position: relative;
+}
+.nx-card__icon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 15px;
+  background: rgba(10, 92, 255, 0.1);
+  color: var(--accent);
+}
+.nx-card--dark .nx-card__icon {
+  background: var(--glass-strong);
+  color: #fff;
+}
+.nx-card__title {
+  margin-top: 22px;
+  font-size: 22px;
+  font-weight: 600;
+}
+.nx-card__text {
+  margin-top: 12px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.nx-card--dark .nx-card__text {
+  color: var(--on-dark-1);
+}
+.nx-card__list {
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 9px;
+  font-size: 15px;
+  color: var(--ink);
+}
+.nx-card--dark .nx-card__list {
+  color: #fff;
+}
+.nx-card__list li {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.nx-card__check {
+  color: var(--accent);
+  flex: 0 0 auto;
+}
+.nx-card--dark .nx-card__check {
+  color: var(--accent-soft);
+}
+
+/* --------------------------------------------------------------------------
+   11. Zwischen-CTA
+   -------------------------------------------------------------------------- */
+.nx-midcta {
+  position: relative;
+  padding: 110px var(--gutter);
+  background: var(--ink);
+  color: #fff;
+  overflow: hidden;
+}
+.nx-midcta__lines {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 52px 52px;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 40%, #000 60%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 40%, #000 60%, transparent);
+}
+.nx-midcta__inner {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+.nx-midcta__kicker {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.6);
+}
+.nx-midcta__title {
+  margin-top: 22px;
+  font-size: clamp(30px, 3.4vw, 46px);
+  line-height: 1.15;
+  font-weight: 700;
+}
+.nx-midcta .nx-btn--light {
+  margin-top: 36px;
+}
+
+/* --------------------------------------------------------------------------
+   12. Was uns antreibt
+   -------------------------------------------------------------------------- */
+.nx-values {
+  background: var(--paper);
+}
+.nx-values__head {
+  max-width: 720px;
+}
+.nx-values__grid {
+  margin-top: 52px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 26px;
+}
+.nx-value {
+  padding: 42px 40px;
+  border-radius: 22px;
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+}
+.nx-value__head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.nx-value__icon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  color: #fff;
+  flex: 0 0 auto;
+}
+.nx-value__icon--accent {
+  background: var(--accent);
+}
+.nx-value__icon--ink {
+  background: var(--ink);
+}
+.nx-value__title {
+  font-size: 26px;
+  font-weight: 600;
+}
+.nx-value__text {
+  margin-top: 22px;
+  font-size: 16.5px;
+  line-height: 1.72;
+  color: var(--muted);
+}
+
+/* --------------------------------------------------------------------------
+   13. Versprechen
+   -------------------------------------------------------------------------- */
+.nx-promises {
+  background: var(--paper-2);
+  border-top: 1px solid var(--line);
+}
+.nx-promises__head {
+  max-width: 760px;
+}
+/* Hairline-Grid: die 1px-Lücken zeigen den Container-Hintergrund. */
+.nx-promises__grid {
+  margin-top: 52px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+.nx-promise {
+  padding: 38px 30px;
+  background: var(--paper);
+  transition:
+    background 0.3s,
+    color 0.3s;
+}
+.nx-promise:hover {
+  background: var(--ink);
+  color: #fff;
+}
+.nx-promise__no {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+}
+.nx-promise__title {
+  margin-top: 16px;
+  font-size: 21px;
+  font-weight: 600;
+}
+.nx-promise__text {
+  margin-top: 12px;
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+.nx-promise:hover .nx-promise__text {
+  color: var(--on-dark-1);
+}
+
+/* --------------------------------------------------------------------------
+   14. Kontakt + Footer
+   -------------------------------------------------------------------------- */
+.nx-contact {
+  position: relative;
+  padding: 120px var(--gutter) 70px;
+  background: var(--ink);
+  color: #fff;
+  overflow: hidden;
+}
+.nx-contact__grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(100% 80% at 20% 0%, #000, transparent 70%);
+  mask-image: radial-gradient(100% 80% at 20% 0%, #000, transparent 70%);
+}
+.nx-contact__inner {
+  position: relative;
+  max-width: var(--wrap);
+  margin: 0 auto;
+}
+.nx-contact__top {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 70px;
+  align-items: start;
+  padding-bottom: 70px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.nx-contact__title {
+  font-size: clamp(32px, 3.6vw, 50px);
+  line-height: 1.1;
+  font-weight: 700;
+}
+.nx-contact__cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-content: end;
+}
+.nx-ccard {
+  padding: 24px 22px;
+  border-radius: 16px;
+  background: var(--glass);
+  border: 1px solid var(--glass-line);
+  color: #fff;
+}
+a.nx-ccard {
+  transition:
+    background 0.25s,
+    transform 0.25s;
+}
+a.nx-ccard:hover {
+  background: var(--glass-strong);
+  transform: translateY(-3px);
+  color: #fff;
+}
+.nx-ccard__label {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--on-dark-2);
+}
+.nx-ccard__value {
+  margin-top: 8px;
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 600;
+}
+.nx-ccard__value--sm {
+  font-size: 17px;
+}
+.nx-ccard__hours {
+  margin-top: 8px;
+  font-size: 15px;
+  line-height: 1.6;
+  font-family: var(--font-body);
+  font-weight: 400;
+}
+
+.nx-footer {
+  padding-top: 36px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: center;
+  justify-content: space-between;
+}
+.nx-footer__brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.nx-footer__mark {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: var(--accent);
+  flex: 0 0 auto;
+}
+.nx-footer__word {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+}
+.nx-footer__word b {
+  font-weight: 800;
+  color: var(--accent-soft);
+}
+.nx-footer__claim {
+  font-size: 14px;
+  color: var(--on-dark-3);
+}
+.nx-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 26px;
+  font-size: 14px;
+  color: var(--on-dark-3);
+  align-items: center;
+}
+.nx-footer__links a,
+.nx-footer__links button {
+  color: rgba(255, 255, 255, 0.6);
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.nx-footer__links a:hover,
+.nx-footer__links button:hover {
+  color: #fff;
+}
+
+/* --------------------------------------------------------------------------
+   15. Kontaktformular
+   -------------------------------------------------------------------------- */
+.nx-form {
+  margin-top: 34px;
+  display: grid;
+  gap: 16px;
+}
+.nx-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.nx-field {
+  display: grid;
+  gap: 8px;
+}
+.nx-field__label {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--on-dark-2);
+  font-weight: 600;
+}
+.nx-field__req {
+  color: var(--accent-soft);
+}
+.nx-input,
+.nx-textarea,
+.nx-select {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: var(--glass);
+  border: 1px solid var(--glass-line);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+}
+.nx-input::placeholder,
+.nx-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+.nx-input:hover,
+.nx-textarea:hover,
+.nx-select:hover {
+  background: rgba(255, 255, 255, 0.09);
+}
+.nx-input:focus,
+.nx-textarea:focus,
+.nx-select:focus {
+  border-color: var(--accent-soft);
+  background: rgba(255, 255, 255, 0.09);
+}
+.nx-select option {
+  background: var(--ink);
+  color: #fff;
+}
+.nx-textarea {
+  min-height: 132px;
+  resize: vertical;
+}
+.nx-input[aria-invalid='true'],
+.nx-textarea[aria-invalid='true'] {
+  border-color: #ff6b6b;
+}
+
+/* Honeypot: für Menschen unsichtbar, für einfache Bots ausfüllbar. */
+.nx-hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.nx-consent {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--on-dark-1);
+}
+.nx-consent input {
+  margin-top: 3px;
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  accent-color: var(--accent);
+}
+.nx-consent a {
+  color: var(--accent-soft);
+  text-decoration: underline;
+}
+
+.nx-form__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+}
+.nx-form__hint {
+  font-size: 13px;
+  color: var(--on-dark-3);
+}
+
+.nx-note {
+  padding: 16px 18px;
+  border-radius: 12px;
+  font-size: 15px;
+  line-height: 1.55;
+  border: 1px solid;
+}
+.nx-note--ok {
+  background: rgba(59, 227, 154, 0.12);
+  border-color: rgba(59, 227, 154, 0.45);
+  color: #b6f5da;
+}
+.nx-note--error {
+  background: rgba(255, 107, 107, 0.12);
+  border-color: rgba(255, 107, 107, 0.45);
+  color: #ffc9c9;
+}
+.nx-note--info {
+  background: var(--glass);
+  border-color: var(--glass-line);
+  color: var(--on-dark-1);
+}
+
+button[disabled],
+.nx-btn[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* --------------------------------------------------------------------------
+   16. Rechtsseiten (Impressum / Datenschutz)
+   -------------------------------------------------------------------------- */
+.nx-legal {
+  padding: 80px var(--gutter) 100px;
+  background: var(--paper);
+}
+.nx-legal__inner {
+  max-width: 820px;
+  margin: 0 auto;
+}
+.nx-legal h1 {
+  font-size: clamp(34px, 4vw, 48px);
+  line-height: 1.1;
+  font-weight: 700;
+}
+.nx-legal h2 {
+  margin-top: 48px;
+  font-size: 24px;
+  font-weight: 600;
+}
+.nx-legal h3 {
+  margin-top: 28px;
+  font-size: 18px;
+  font-weight: 600;
+}
+.nx-legal p,
+.nx-legal li {
+  margin-top: 14px;
+  font-size: 16.5px;
+  line-height: 1.75;
+  color: var(--muted);
+}
+.nx-legal ul {
+  margin: 0;
+  padding-left: 22px;
+}
+.nx-legal a {
+  text-decoration: underline;
+}
+.nx-legal__intro {
+  margin-top: 18px;
+  font-size: 18px;
+  color: var(--muted);
+}
+.nx-legal__meta {
+  margin-top: 56px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+  color: var(--muted);
+}
+.nx-legal__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 28px;
+  font-size: 15px;
+  font-weight: 600;
+}
+/* Markiert Platzhalter, die vom Kunden befüllt werden müssen. */
+.nx-todo {
+  display: block;
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-left: 3px solid #f0a020;
+  background: #fff8ec;
+  border-radius: 0 10px 10px 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #7a4d05;
+}
+
+/* --------------------------------------------------------------------------
+   17. Cookie-Banner
+   -------------------------------------------------------------------------- */
+.nx-cookie {
+  position: fixed;
+  z-index: 80;
+  inset: auto 20px 20px;
+  max-width: 560px;
+  margin-left: auto;
+  padding: 26px 26px 22px;
+  border-radius: 20px;
+  background: rgba(20, 22, 26, 0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-line);
+  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.45);
+  color: #fff;
+  animation: nx-rise 0.4s var(--ease-out) both;
+}
+.nx-cookie__title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+}
+.nx-cookie__text {
+  margin-top: 12px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--on-dark-1);
+}
+.nx-cookie__text a {
+  color: var(--accent-soft);
+  text-decoration: underline;
+}
+.nx-cookie__actions {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+/* Ablehnen muss genauso leicht erreichbar sein wie Zustimmen. */
+.nx-cookie__btn {
+  flex: 1 1 auto;
+  min-width: 140px;
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
+}
+.nx-cookie__btn--accept {
+  background: var(--accent);
+  color: #fff;
+}
+.nx-cookie__btn--accept:hover {
+  background: var(--accent-soft);
+}
+.nx-cookie__btn--reject {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-color: var(--glass-line);
+}
+.nx-cookie__btn--reject:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+.nx-cookie__btn--link {
+  flex: 0 0 auto;
+  min-width: 0;
+  background: none;
+  color: var(--on-dark-2);
+  text-decoration: underline;
+  padding: 14px 4px;
+  font-weight: 500;
+}
+.nx-cookie__btn--link:hover {
+  color: #fff;
+}
+.nx-cookie__details {
+  margin-top: 18px;
+  display: grid;
+  gap: 12px;
+  max-height: 42vh;
+  overflow-y: auto;
+}
+.nx-cookie__group {
+  padding: 16px;
+  border-radius: 14px;
+  background: var(--glass);
+  border: 1px solid var(--glass-line);
+}
+.nx-cookie__group h3 {
+  font-size: 15px;
+  font-weight: 600;
+  font-family: var(--font-body);
+}
+.nx-cookie__group p {
+  margin-top: 6px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--on-dark-2);
+}
+.nx-cookie__switch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+.nx-cookie__switch input {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--accent);
+  flex: 0 0 auto;
+}
+.nx-cookie__fixed {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--on-dark-3);
+  flex: 0 0 auto;
+}
+
+/* --------------------------------------------------------------------------
+   18. Scroll-Reveal
+   -------------------------------------------------------------------------- */
+/* Der Startzustand hängt an der Klasse `js`, die ein Inline-Skript im <head>
+   noch vor dem ersten Paint setzt. Ohne JavaScript greifen diese Regeln nie –
+   dann ist die Seite von Anfang an vollständig sichtbar, statt unsichtbar zu
+   bleiben oder kurz aufzublitzen. */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.7s var(--ease-out) var(--reveal-delay, 0s),
+    transform 0.7s var(--ease-fly) var(--reveal-delay, 0s);
+}
+.js [data-reveal][data-fly='left'] {
+  transform: translateX(-90px);
+  transition-duration: 0.85s;
+}
+.js [data-reveal][data-fly='right'] {
+  transform: translateX(90px);
+  transition-duration: 0.85s;
+}
+.js [data-reveal][data-fly='y'] {
+  transform: translateY(60px);
+  transition-duration: 0.85s;
+}
+.js [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* --------------------------------------------------------------------------
+   19. Keyframes
+   -------------------------------------------------------------------------- */
+/* Verschiebt den Track um exakt eine Kopienbreite – danach ist der Zustand
+   wieder identisch und die Schleife läuft ohne Sprung weiter.
+   Die Anzahl muss zu COPIES in Sections.tsx passen. */
+@keyframes nx-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% / var(--nx-marquee-copies)));
+  }
+}
+@keyframes nx-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+@keyframes nx-spin {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes nx-pulse {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+@keyframes nx-shine {
+  to {
+    background-position: -200% 0;
+  }
+}
+@keyframes nx-beam {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(400%);
+  }
+}
+@keyframes nx-rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   20. Responsive
+   -------------------------------------------------------------------------- */
+
+/* 1024–1239 px */
+@media (max-width: 1239px) {
+  .nx-hero__inner {
+    grid-template-columns: 1fr;
+    gap: 56px;
+  }
+  .nx-hero__sub {
+    max-width: 46ch;
+  }
+  .nx-orbits {
+    height: 420px;
+  }
+  .nx-services__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .nx-promises__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .nx-about__grid {
+    gap: 56px;
+  }
+  .nx-nav {
+    gap: 22px;
+  }
+}
+
+/* 768–1023 px */
+@media (max-width: 1023px) {
+  :root {
+    --section-y: 80px;
+  }
+  .nx-hero {
+    padding: 80px var(--gutter) 96px;
+  }
+  .nx-about__grid,
+  .nx-values__grid,
+  .nx-contact__top {
+    grid-template-columns: 1fr;
+  }
+  .nx-about__grid {
+    gap: 44px;
+  }
+  .nx-contact__top {
+    gap: 48px;
+  }
+  .nx-about__sticky {
+    position: static;
+  }
+  .nx-contact {
+    padding: 80px var(--gutter) 60px;
+  }
+  .nx-midcta {
+    padding: 80px var(--gutter);
+  }
+  .nx-value {
+    padding: 34px 30px;
+  }
+  .nx-badge--top {
+    right: 8px;
+  }
+  .nx-badge--bottom {
+    left: 8px;
+  }
+}
+
+/* < 768 px */
+@media (max-width: 767px) {
+  :root {
+    --section-y: 64px;
+    --gutter: 20px;
+  }
+  html {
+    scroll-padding-top: 76px;
+  }
+
+  /* Navigation als eingeblendetes Panel; der Telefon-CTA bleibt sichtbar. */
+  .nx-header__bar {
+    gap: 12px;
+    padding: 12px var(--gutter);
+  }
+  .nx-burger {
+    display: grid;
+    margin-left: auto;
+    order: 3;
+  }
+  .nx-header .nx-pill {
+    order: 2;
+    margin-left: auto;
+    /* Mindesthöhe 44 px als Touch-Target, ohne die Pill zu breit zu machen. */
+    min-height: 44px;
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+  .nx-nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 8px var(--gutter) 18px;
+    background: rgba(20, 22, 26, 0.98);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    transform: translateY(-8px);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.22s,
+      transform 0.22s var(--ease-out),
+      visibility 0.22s;
+  }
+  .nx-nav.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+  .nx-nav__link {
+    /* Touch-Target ≥ 44 px */
+    padding: 14px 4px;
+    font-size: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  }
+  .nx-nav__link:last-child {
+    border-bottom: 0;
+  }
+
+  .nx-hero {
+    padding: 56px var(--gutter) 72px;
+  }
+  .nx-hero__sub {
+    font-size: 18px;
+    margin-top: 20px;
+  }
+  .nx-hero__ctas {
+    margin-top: 30px;
+  }
+  .nx-btn--primary,
+  .nx-btn--ghost {
+    padding: 15px 24px;
+    width: 100%;
+    justify-content: center;
+  }
+  .nx-stats {
+    margin-top: 40px;
+    gap: 26px;
+  }
+  .nx-stats__value {
+    font-size: 24px;
+  }
+  .nx-orbits {
+    height: 320px;
+    transform: scale(0.74);
+  }
+  .nx-badge {
+    font-size: 12px;
+    padding: 10px 13px;
+  }
+
+  .nx-services__grid,
+  .nx-promises__grid {
+    grid-template-columns: 1fr;
+  }
+  .nx-services__grid {
+    margin-top: 36px;
+  }
+  .nx-card {
+    padding: 26px 22px 24px;
+  }
+  .nx-promise {
+    padding: 28px 22px;
+  }
+  .nx-promises__grid,
+  .nx-values__grid {
+    margin-top: 36px;
+  }
+  .nx-value {
+    padding: 28px 24px;
+  }
+  .nx-about__quote {
+    padding: 20px 22px;
+  }
+  .nx-form__row {
+    grid-template-columns: 1fr;
+  }
+  .nx-contact__cards {
+    grid-template-columns: 1fr;
+  }
+  .nx-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+  .nx-footer__links {
+    gap: 18px;
+  }
+  .nx-cookie {
+    inset: auto 12px 12px;
+    padding: 22px 20px 18px;
+  }
+  .nx-cookie__actions {
+    flex-direction: column;
+  }
+  .nx-cookie__btn {
+    width: 100%;
+  }
+  .nx-legal {
+    padding: 56px var(--gutter) 72px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   21. Reduzierte Bewegung
+   Schaltet Reveals, Ticker, Rotation, Float, Shine und Beams komplett ab.
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .nx-marquee__track,
+  .nx-orbit--outer,
+  .nx-orbit--inner,
+  .nx-orbit__core,
+  .nx-orbit__core span,
+  .nx-badge,
+  .nx-hero__title,
+  .nx-beam {
+    animation: none !important;
+  }
+  .nx-hero__title {
+    background: none;
+    -webkit-background-clip: border-box;
+    background-clip: border-box;
+    color: #fff;
+  }
+  .nx-beam {
+    display: none;
+  }
+  .nx-hero__trail {
+    display: none;
+  }
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Kein Hover-Effekt auf Touch – sonst bleiben Zustände "kleben". */
+@media (hover: none) {
+  .nx-promise:hover {
+    background: var(--paper);
+    color: inherit;
+  }
+  .nx-promise:hover .nx-promise__text {
+    color: var(--muted);
+  }
+}

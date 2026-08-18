@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--accent:#0A5CFF;--accent-soft:#4E8CFF;--ink:#14161A;--ink-2:#1C1F26;--paper:#FFFFFF;--paper-2:#F5F7FA;--line:rgba(20,22,26,.10);--muted:#5C6270}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:Manrope,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{color:var(--accent-soft)}
+  h1,h2,h3,h4{font-family:Sora,system-ui,sans-serif;margin:0;letter-spacing:-.02em;text-wrap:balance}
+  p{margin:0;text-wrap:pretty}
+  ::selection{background:var(--accent);color:#fff}
+  @keyframes nx-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @keyframes nx-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+  @keyframes nx-spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+  @keyframes nx-pulse{0%{transform:scale(.6);opacity:.7}100%{transform:scale(2.4);opacity:0}}
+  @keyframes nx-dash{to{stroke-dashoffset:-400}}
+  @keyframes nx-blink{0%,100%{opacity:.25}50%{opacity:1}}
+  @keyframes nx-shine{to{background-position:-200% 0}}
+  @keyframes nx-beam{0%{transform:translateY(-100%)}100%{transform:translateY(400%)}}
+</style>
+</helmet>
+
+<div style="position:relative">
+
+  <div data-progress style="position:fixed;top:0;left:0;height:3px;width:0;z-index:60;background:linear-gradient(90deg,var(--accent),#8FB6FF);box-shadow:0 0 14px rgba(10,92,255,.8)"></div>
+
+  <header style="position:sticky;top:0;z-index:50;overflow:hidden;background:rgba(20,22,26,.82);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08)">
+    <div style="position:relative;z-index:2;max-width:1240px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;gap:32px">
+      <a href="#top" style="display:flex;align-items:center;gap:12px;flex:0 0 auto">
+        <span style="display:grid;place-items:center;width:38px;height:38px;border-radius:11px;background:var(--accent);box-shadow:0 6px 20px rgba(10,92,255,.45)">
+          <svg width="20" height="20" viewBox="0 0 96 96" aria-hidden="true"><path d="M30.7 69.1 L30.7 28.8 L36.5 28.8 L65.3 59.5 L65.3 28.8" stroke="#fff" stroke-width="8.6" fill="none" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="65.3" cy="28.8" r="6.7" fill="#fff"></circle></svg>
+        </span>
+        <span style="font-family:Sora,sans-serif;font-size:21px;font-weight:600;color:#fff;letter-spacing:-.02em">Nexo<span style="font-weight:800;color:var(--accent-soft)">IT</span></span>
+      </a>
+      <nav style="margin-left:auto;display:flex;align-items:center;gap:30px">
+        <a href="#leistungen" style="color:rgba(255,255,255,.72);font-size:15px;font-weight:500" style-hover="color:#fff">Leistungen</a>
+        <a href="#ueber-uns" style="color:rgba(255,255,255,.72);font-size:15px;font-weight:500" style-hover="color:#fff">Über uns</a>
+        <a href="#werte" style="color:rgba(255,255,255,.72);font-size:15px;font-weight:500" style-hover="color:#fff">Was uns antreibt</a>
+        <a href="#versprechen" style="color:rgba(255,255,255,.72);font-size:15px;font-weight:500" style-hover="color:#fff">Versprechen</a>
+        <a href="tel:015141289974" style="display:flex;align-items:center;gap:9px;color:#fff;font-size:15px;font-weight:600;padding:10px 18px;border-radius:999px;background:var(--accent);box-shadow:0 8px 24px rgba(10,92,255,.35)" style-hover="background:var(--accent-soft);color:#fff">0151 / 412 899 74</a>
+      </nav>
+    </div>
+  </header>
+
+  <section id="top" style="position:relative;background:var(--ink);color:#fff;overflow:hidden;padding:120px 28px 140px">
+    <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(120% 90% at 50% 10%,#000 30%,transparent 75%)"></div>
+    <div data-glow style="position:absolute;left:50%;top:20%;width:820px;height:820px;margin:-410px 0 0 -410px;border-radius:50%;background:radial-gradient(circle,rgba(10,92,255,.42),transparent 62%);filter:blur(20px);pointer-events:none;transition:transform .6s cubic-bezier(.2,.7,.2,1)"></div>
+    <div style="position:absolute;inset:0;overflow:hidden;pointer-events:none">
+      <span style="position:absolute;left:18%;top:0;width:1px;height:130px;background:linear-gradient(180deg,transparent,rgba(143,182,255,.9),transparent);animation:nx-beam 6s linear infinite"></span>
+      <span style="position:absolute;left:52%;top:0;width:1px;height:100px;background:linear-gradient(180deg,transparent,rgba(143,182,255,.6),transparent);animation:nx-beam 8.5s linear infinite 1.8s"></span>
+      <span style="position:absolute;left:81%;top:0;width:1px;height:150px;background:linear-gradient(180deg,transparent,rgba(59,227,154,.55),transparent);animation:nx-beam 7.4s linear infinite 3.2s"></span>
+    </div>
+    <div style="position:relative;max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center">
+      <div>
+        <h1 data-reveal style="font-size:clamp(44px,5.4vw,78px);line-height:1.02;font-weight:700;background:linear-gradient(100deg,#fff 20%,#8FB6FF 42%,#fff 62%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:nx-shine 7s linear infinite">IT einfach<br>und sicher.</h1>
+        <p data-reveal style="margin-top:26px;font-size:21px;line-height:1.55;color:rgba(255,255,255,.72);max-width:30ch">Kümmern Sie sich um Ihr Kerngeschäft, wir um Ihre IT. Wir bieten IT Lösungen für jeden Bereich.</p>
+        <div data-reveal style="margin-top:38px;display:flex;flex-wrap:wrap;gap:14px">
+          <a href="#leistungen" style="display:inline-flex;align-items:center;gap:12px;padding:17px 30px;border-radius:14px;background:var(--accent);color:#fff;font-weight:700;font-size:16px;box-shadow:0 16px 40px rgba(10,92,255,.4);transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-3px);box-shadow:0 22px 52px rgba(10,92,255,.55);color:#fff">Unsere Dienstleistungen <span style="font-size:19px">→</span></a>
+          <a href="#kontakt" style="display:inline-flex;align-items:center;padding:17px 30px;border-radius:14px;border:1px solid rgba(255,255,255,.22);color:#fff;font-weight:600;font-size:16px;transition:background .25s,border-color .25s" style-hover="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.45);color:#fff">Kontakt</a>
+        </div>
+        <div data-reveal style="margin-top:56px;display:flex;gap:44px;flex-wrap:wrap">
+          <div><div style="font-family:Sora,sans-serif;font-size:30px;font-weight:700">24/7</div><div style="font-size:14px;color:rgba(255,255,255,.55);margin-top:4px">Überwachung</div></div>
+          <div><div style="font-family:Sora,sans-serif;font-size:30px;font-weight:700">DSGVO</div><div style="font-size:14px;color:rgba(255,255,255,.55);margin-top:4px">Hosting in der EU</div></div>
+          <div><div style="font-family:Sora,sans-serif;font-size:30px;font-weight:700">Full&nbsp;Service</div><div style="font-size:14px;color:rgba(255,255,255,.55);margin-top:4px">Web &amp; Infrastruktur</div></div>
+        </div>
+      </div>
+      <div data-reveal data-orbits style="position:relative;height:480px;display:grid;place-items:center">
+        <div style="position:absolute;width:420px;height:420px;border-radius:50%;border:1px solid rgba(255,255,255,.10);animation:nx-spin 46s linear infinite">
+          <span style="position:absolute;top:-5px;left:50%;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:var(--accent-soft);box-shadow:0 0 18px var(--accent-soft)"></span>
+        </div>
+        <div style="position:absolute;width:300px;height:300px;border-radius:50%;border:1px dashed rgba(255,255,255,.14);animation:nx-spin 30s linear infinite reverse">
+          <span style="position:absolute;bottom:-4px;left:50%;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:#3BE39A;box-shadow:0 0 16px #3BE39A"></span>
+        </div>
+        <div style="position:absolute;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(78,140,255,.35),rgba(10,92,255,.10));border:1px solid rgba(255,255,255,.12)"></div>
+        <div style="position:relative;display:grid;place-items:center;width:112px;height:112px;border-radius:30px;background:var(--accent);box-shadow:0 24px 70px rgba(10,92,255,.6);animation:nx-float 7s ease-in-out infinite">
+          <svg width="58" height="58" viewBox="0 0 96 96" aria-hidden="true"><path d="M30.7 69.1 L30.7 28.8 L36.5 28.8 L65.3 59.5 L65.3 28.8" stroke="#fff" stroke-width="8.6" fill="none" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="65.3" cy="28.8" r="6.7" fill="#fff"></circle></svg>
+          <span style="position:absolute;inset:0;border-radius:30px;border:1px solid rgba(255,255,255,.35);animation:nx-pulse 3.6s ease-out infinite"></span>
+        </div>
+        <div style="position:absolute;top:24px;right:0;padding:13px 17px;border-radius:14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(8px);font-size:13px;font-weight:600;animation:nx-float 9s ease-in-out infinite">Server online · 99,9 %</div>
+        <div style="position:absolute;bottom:40px;left:0;padding:13px 17px;border-radius:14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(8px);font-size:13px;font-weight:600;animation:nx-float 11s ease-in-out infinite">Backup abgeschlossen</div>
+      </div>
+    </div>
+  </section>
+
+  <sc-if value="{{ showMarquee }}" hint-placeholder-val="{{ true }}">
+    <div style="background:var(--accent);color:#fff;overflow:hidden;padding:15px 0">
+      <div style="display:flex;width:max-content;animation:nx-marquee 34s linear infinite;font-family:Sora,sans-serif;font-size:15px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap">
+        <div style="display:flex;gap:44px;padding-right:44px">
+          <span>Serverhosting</span><span>·</span><span>WebHosting</span><span>·</span><span>Webseiten erstellen</span><span>·</span><span>Backup Service</span><span>·</span><span>SEO</span><span>·</span><span>IT Dienstleistungen</span><span>·</span>
+        </div>
+        <div style="display:flex;gap:44px;padding-right:44px">
+          <span>Serverhosting</span><span>·</span><span>WebHosting</span><span>·</span><span>Webseiten erstellen</span><span>·</span><span>Backup Service</span><span>·</span><span>SEO</span><span>·</span><span>IT Dienstleistungen</span><span>·</span>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <section id="ueber-uns" style="padding:120px 28px;background:var(--paper)">
+    <div style="max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start">
+      <div data-reveal style="position:sticky;top:110px">
+        <div style="font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)">Über uns</div>
+        <h2 style="margin-top:18px;font-size:clamp(34px,3.6vw,52px);line-height:1.08;font-weight:700">IT Dienstleistungen<br>aller Art</h2>
+        <p style="margin-top:22px;font-size:18px;line-height:1.65;color:var(--muted)">Als Full-Service-IT-Unternehmen bieten wir unseren Kunden umfassende Lösungen für ihre Webpräsenz und IT-Infrastruktur.</p>
+        <a href="#kontakt" style="margin-top:32px;display:inline-flex;align-items:center;gap:11px;padding:16px 28px;border-radius:13px;background:var(--ink);color:#fff;font-weight:600;transition:transform .25s,background .25s" style-hover="transform:translateY(-2px);background:var(--accent);color:#fff">Anfrage senden <span>→</span></a>
+      </div>
+      <div style="display:grid;gap:26px">
+        <p data-reveal style="font-size:18px;line-height:1.7;color:var(--ink)">Von der Gestaltung und Entwicklung von benutzerfreundlichen und professionellen Webseiten bis hin zur Verwaltung von Servern und der Bereitstellung von Hosting-Diensten.</p>
+        <p data-reveal style="font-size:18px;line-height:1.7;color:var(--muted)">Wir haben alles, was unsere Kunden benötigen, um erfolgreich im digitalen Zeitalter zu sein. Unser Team von erfahrenen Experten ist bereit, unseren Kunden bei jedem Schritt des Weges zu unterstützen, vom Konzept bis zur Umsetzung.</p>
+        <p data-reveal style="font-size:18px;line-height:1.7;color:var(--muted)">Wir bieten umfassende Support- und Wartungsdienste, damit unsere Kunden sich keine Sorgen um ihre IT-Systeme machen müssen.</p>
+        <p data-reveal style="padding:26px 28px;border-left:3px solid var(--accent);background:var(--paper-2);border-radius:0 14px 14px 0;font-size:18px;line-height:1.7;font-weight:500">Wenn Sie auf der Suche nach einem zuverlässigen Partner für Ihre Web- und IT-Bedürfnisse sind, dann sind Sie bei uns genau richtig. Kontaktieren Sie uns noch heute, um mehr über unsere Dienstleistungen zu erfahren und wie wir Ihnen helfen können, Ihr Unternehmen im digitalen Zeitalter zu positionieren.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="leistungen" style="padding:120px 28px;background:var(--paper-2);border-top:1px solid var(--line)">
+    <div style="max-width:1240px;margin:0 auto">
+      <div data-reveal style="max-width:760px">
+        <div style="font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)">IT-Services, die zu Ihnen passen</div>
+        <h2 style="margin-top:18px;font-size:clamp(34px,3.6vw,52px);line-height:1.08;font-weight:700">Individuelle Lösungen<br><span style="color:var(--muted)">für Ihr Unternehmen</span></h2>
+      </div>
+      <div style="margin-top:56px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+
+        <article data-reveal data-fly="left" style="position:relative;padding:34px 30px 30px;border-radius:20px;background:var(--paper);border:1px solid var(--line);overflow:hidden;transition:transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s,border-color .3s">
+          <div style="display:grid;place-items:center;width:52px;height:52px;border-radius:15px;background:rgba(10,92,255,.10);color:var(--accent)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="6" rx="2"></rect><rect x="3" y="14" width="18" height="6" rx="2"></rect><path d="M7 7h.01M7 17h.01"></path></svg>
+          </div>
+          <h3 style="margin-top:22px;font-size:22px;font-weight:600">Serverhosting</h3>
+          <p style="margin-top:12px;font-size:16px;line-height:1.6;color:var(--muted)">Zuverlässige Server-Infrastruktur für Ihr Unternehmen. Sichere und leistungsstarke Serverlösungen – flexibel, skalierbar und zuverlässig.</p>
+          <ul style="margin:20px 0 0;padding:0;list-style:none;display:grid;gap:9px;font-size:15px;color:var(--ink)">
+            <li style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent)">✓</span>Hochleistungsserver</li>
+            <li style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent)">✓</span>Sichere Rechenzentren</li>
+            <li style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent)">✓</span>Flexible Skalierbarkeit</li>
+            <li style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent)">✓</span>24/7 Überwachung</li>
+          </ul>
+        </article>
+
+        <article data-reveal data-fly="y" style="position:relative;padding:34px 30px 30px;border-radius:20px;background:var(--paper);border:1px solid var(--line);overflow:hidden;transition:transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s,border-color .3s">
+          <div style="display:grid;place-items:center;width:52px;height:52px;border-radius:15px;background:rgba(10,92,255,.10);color:var(--accent)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3C9.5 5.5 9.5 18.5 12 21"></path></svg>
+          </div>
+          <h3 style="margin-top:22px;font-size:22px;font-weight:600">WebHosting</h3>
+          <p style="margin-top:12px;font-size:16px;line-height:1.6;color:var(--muted)">Schnelles und stabiles Webhosting für Ihre Webseite – mit maximaler Verfügbarkeit.</p>
+          <ul style="margin:20px 0 0;padding:0;list-style:none;display:grid;gap:9px;font-size:15px;color:var(--ink)">
+            <li style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent)">✓</span>Hohe Verfügbarkeit</li>
+            <li style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent)">✓</span>SSL-Zertifikate inklusive</li>
+            <li style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent)">✓</span>Tägliche Backups</li>
+            <li style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent)">✓</span>Einfache Verwaltung</li>
+          </ul>
+        </article>
+
+        <article data-reveal data-fly="right" style="position:relative;padding:34px 30px 30px;border-radius:20px;background:var(--paper);border:1px solid var(--line);overflow:hidden;transition:transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s,border-color .3s">
+          <div style="display:grid;place-items:center;width:52px;height:52px;border-radius:15px;background:rgba(10,92,255,.10);color:var(--accent)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="14" rx="2"></rect><path d="M3 9h18M8 22h8"></path></svg>
+          </div>
+          <h3 style="margin-top:22px;font-size:22px;font-weight:600">Webseiten erstellen</h3>
+          <p style="margin-top:12px;font-size:16px;line-height:1.6;color:var(--muted)">Individuelle Webseiten – modern, responsiv und auf Ihr Business zugeschnitten.</p>
+          <ul style="margin:20px 0 0;padding:0;list-style:none;display:grid;gap:9px;font-size:15px;color:var(--ink)">
+            <li style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent)">✓</span>Responsives Design</li>
+            <li style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent)">✓</span>Aktuelle Technologien</li>
+            <li style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent)">✓</span>SEO-optimiert</li>
+            <li style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent)">✓</span>Passendes Branding</li>
+          </ul>
+        </article>
+
+        <article data-reveal data-fly="left" style="position:relative;padding:34px 30px 30px;border-radius:20px;background:var(--paper);border:1px solid var(--line);overflow:hidden;transition:transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s,border-color .3s">
+          <div style="display:grid;place-items:center;width:52px;height:52px;border-radius:15px;background:rgba(10,92,255,.10);color:var(--accent)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-3-6.7"></path><path d="M21 4v5h-5"></path><circle cx="12" cy="12" r="3"></circle></svg>
+          </div>
+          <h3 style="margin-top:22px;font-size:22px;font-weight:600">Backup Service</h3>
+          <p style="margin-top:12px;font-size:16px;line-height:1.6;color:var(--muted)">Automatisierte Datensicherungen – damit Ihre Daten jederzeit geschützt sind.</p>
+          <ul style="margin:20px 0 0;padding:0;list-style:none;display:grid;gap:9px;font-size:15px;color:var(--ink)">
+            <li style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent)">✓</span>Automatisierte Backups</li>
+            <li style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent)">✓</span>Verschlüsselte Speicherung</li>
+            <li style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent)">✓</span>Flexible Wiederherstellung</li>
+            <li style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent)">✓</span>DSGVO-konform</li>
+          </ul>
+        </article>
+
+        <article data-reveal data-fly="y" style="position:relative;padding:34px 30px 30px;border-radius:20px;background:var(--paper);border:1px solid var(--line);overflow:hidden;transition:transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s,border-color .3s">
+          <div style="display:grid;place-items:center;width:52px;height:52px;border-radius:15px;background:rgba(10,92,255,.10);color:var(--accent)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 18V9M10 18V5M16 18v-6M22 18V3"></path></svg>
+          </div>
+          <h3 style="margin-top:22px;font-size:22px;font-weight:600">SEO</h3>
+          <p style="margin-top:12px;font-size:16px;line-height:1.6;color:var(--muted)">Bessere Sichtbarkeit bei Google &amp; Co. – wir optimieren Ihre Webseite für Suchmaschinen.</p>
+          <ul style="margin:20px 0 0;padding:0;list-style:none;display:grid;gap:9px;font-size:15px;color:var(--ink)">
+            <li style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent)">✓</span>Keyword-Optimierung</li>
+            <li style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent)">✓</span>OnPage- &amp; OffPage-SEO</li>
+            <li style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent)">✓</span>Performance-Monitoring</li>
+            <li style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent)">✓</span>Nachhaltige Ranking-Strategie</li>
+          </ul>
+        </article>
+
+        <article data-reveal data-fly="right" style="position:relative;padding:34px 30px 30px;border-radius:20px;background:var(--ink);color:#fff;border:1px solid var(--ink);overflow:hidden;transition:transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s">
+          <div style="position:absolute;inset:0;background:radial-gradient(120% 90% at 85% 0%,rgba(10,92,255,.55),transparent 60%)"></div>
+          <div style="position:relative">
+            <div style="display:grid;place-items:center;width:52px;height:52px;border-radius:15px;background:rgba(255,255,255,.12);color:#fff">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3l8 4v5c0 5-3.4 8.2-8 9-4.6-.8-8-4-8-9V7l8-4z"></path><path d="M9 12l2 2 4-4"></path></svg>
+            </div>
+            <h3 style="margin-top:22px;font-size:22px;font-weight:600">IT Dienstleistungen</h3>
+            <p style="margin-top:12px;font-size:16px;line-height:1.6;color:rgba(255,255,255,.72)">Von Beratung bis Support – wir bieten maßgeschneiderte IT-Lösungen für Ihr Unternehmen.</p>
+            <ul style="margin:20px 0 0;padding:0;list-style:none;display:grid;gap:9px;font-size:15px">
+              <li style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent-soft)">✓</span>Beratung &amp; Support</li>
+              <li style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent-soft)">✓</span>Netzwerkmanagement</li>
+              <li style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent-soft)">✓</span>Cloud-Lösungen</li>
+              <li style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent-soft)">✓</span>Individuelle IT-Konzepte</li>
+            </ul>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section style="position:relative;padding:110px 28px;background:var(--ink);color:#fff;overflow:hidden">
+    <div style="position:absolute;inset:0;background-image:linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:52px 52px;mask-image:linear-gradient(90deg,transparent,#000 40%,#000 60%,transparent)"></div>
+    <div data-reveal style="position:relative;max-width:900px;margin:0 auto;text-align:center">
+      <div style="font-size:14px;line-height:1.6;color:rgba(255,255,255,.6)">Von der Idee bis zur Umsetzung<br>wir begleiten Sie auf jedem Schritt</div>
+      <h2 style="margin-top:22px;font-size:clamp(30px,3.4vw,46px);line-height:1.15;font-weight:700">Weil Erfolg Teamarbeit ist – wir sind Ihr Partner für digitale Lösungen.</h2>
+      <a href="#kontakt" style="margin-top:36px;display:inline-flex;align-items:center;gap:11px;padding:17px 32px;border-radius:14px;background:#fff;color:var(--ink);font-weight:700;transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-3px);box-shadow:0 20px 46px rgba(255,255,255,.18);color:var(--ink)">Kontakt aufnehmen <span>→</span></a>
+    </div>
+  </section>
+
+  <section id="werte" style="padding:120px 28px;background:var(--paper)">
+    <div style="max-width:1240px;margin:0 auto">
+      <div data-reveal style="max-width:720px">
+        <div style="font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)">Unsere Leitlinien</div>
+        <h2 style="margin-top:18px;font-size:clamp(34px,3.6vw,52px);line-height:1.08;font-weight:700">Was uns antreibt</h2>
+        <p style="margin-top:16px;font-size:18px;color:var(--muted)">auf Ihre Bedürfnisse abgestimmt</p>
+      </div>
+      <div style="margin-top:52px;display:grid;grid-template-columns:1fr 1fr;gap:26px">
+        <div data-reveal style="padding:42px 40px;border-radius:22px;background:var(--paper-2);border:1px solid var(--line)">
+          <div style="display:flex;align-items:center;gap:14px">
+            <span style="display:grid;place-items:center;width:46px;height:46px;border-radius:13px;background:var(--accent);color:#fff"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6-10-6-10-6z"></path><circle cx="12" cy="12" r="2.6"></circle></svg></span>
+            <h3 style="font-size:26px;font-weight:600">Vision</h3>
+          </div>
+          <p style="margin-top:22px;font-size:16.5px;line-height:1.72;color:var(--muted)">Unsere Vision ist es, unseren Kunden umfassende, innovative und zuverlässige Lösungen zu bieten. Wir wollen dabei die digitale Transformation unserer Kunden vorantreiben und ihnen dabei helfen, ihr volles Potential auszuschöpfen. Durch unsere hochqualifizierten Mitarbeiter und unsere Partnerschaften mit führenden Technologieunternehmen sind wir in der Lage, maßgeschneiderte Lösungen zu entwickeln, die den Bedarf unserer Kunden erfüllen und ihnen einen Wettbewerbsvorteil verschaffen. Wir setzen auf Nachhaltigkeit und Verantwortung und wollen dazu beitragen, die digitale Welt für alle Menschen zugänglicher und nutzbar zu gestalten.</p>
+        </div>
+        <div data-reveal style="padding:42px 40px;border-radius:22px;background:var(--paper-2);border:1px solid var(--line)">
+          <div style="display:flex;align-items:center;gap:14px">
+            <span style="display:grid;place-items:center;width:46px;height:46px;border-radius:13px;background:var(--ink);color:#fff"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="4.5"></circle><circle cx="12" cy="12" r="1"></circle></svg></span>
+            <h3 style="font-size:26px;font-weight:600">Mission</h3>
+          </div>
+          <p style="margin-top:22px;font-size:16.5px;line-height:1.72;color:var(--muted)">Unsere Mission ist es, unseren Kunden den bestmöglichen Mehrwert durch unsere IT-Dienstleistungen zu bieten. Mit unserer Expertise und unserem Engagement stellen wir zuverlässige und effektive Systeme bereit, die Geschäftsprozesse optimieren und den Erfolg unserer Kunden fördern. Wir entwickeln individuelle und innovative Ansätze, die passgenau auf ihre Bedürfnisse abgestimmt sind. Dabei setzen wir auf Partnerschaft und Vertrauen und wollen gemeinsam mit unseren Kunden erfolgreich sein. Stetige Verbesserung unserer Prozesse und die kontinuierliche Optimierung unserer Leistungen sind für uns selbstverständlich – um jederzeit den bestmöglichen Service bieten zu können.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="versprechen" style="padding:120px 28px;background:var(--paper-2);border-top:1px solid var(--line)">
+    <div style="max-width:1240px;margin:0 auto">
+      <div data-reveal style="max-width:760px">
+        <div style="font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)">Ihre Zufriedenheit ist unser Antrieb</div>
+        <h2 style="margin-top:18px;font-size:clamp(34px,3.6vw,52px);line-height:1.08;font-weight:700">Was Sie von uns<br>erwarten können</h2>
+        <p style="margin-top:16px;font-size:18px;color:var(--muted)">zuverlässige IT-Lösungen aus einer Hand</p>
+      </div>
+      <div style="margin-top:52px;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border-radius:22px;overflow:hidden;border:1px solid var(--line)">
+        <div data-reveal style="padding:38px 30px;background:var(--paper);transition:background .3s" style-hover="background:var(--ink);color:#fff">
+          <div style="font-family:Sora,sans-serif;font-size:14px;font-weight:700;color:var(--accent)">01</div>
+          <h3 style="margin-top:16px;font-size:21px;font-weight:600">Individualität</h3>
+          <p style="margin-top:12px;font-size:15.5px;line-height:1.65;color:var(--muted)">Wir gehen auf die individuellen Wünsche unserer Kunden ein und erstellen zusammen mit Ihnen einen maßgeschneiderten Projektplan.</p>
+        </div>
+        <div data-reveal style="padding:38px 30px;background:var(--paper);transition:background .3s" style-hover="background:var(--ink);color:#fff">
+          <div style="font-family:Sora,sans-serif;font-size:14px;font-weight:700;color:var(--accent)">02</div>
+          <h3 style="margin-top:16px;font-size:21px;font-weight:600">Reaktionszeit</h3>
+          <p style="margin-top:12px;font-size:15.5px;line-height:1.65;color:var(--muted)">Lange Warten können Sie woanders. Bei uns erhalten Sie einen schnellen Support und eine schnelle Bearbeitung Ihrer Anfragen.</p>
+        </div>
+        <div data-reveal style="padding:38px 30px;background:var(--paper);transition:background .3s" style-hover="background:var(--ink);color:#fff">
+          <div style="font-family:Sora,sans-serif;font-size:14px;font-weight:700;color:var(--accent)">03</div>
+          <h3 style="margin-top:16px;font-size:21px;font-weight:600">Hochverfügbarkeit</h3>
+          <p style="margin-top:12px;font-size:15.5px;line-height:1.65;color:var(--muted)">Wir hosten ausschließlich auf sorgfältig ausgewählten Hochverfügbarkeitsservern, die der EU-Datenschutzverordnung entsprechen.</p>
+        </div>
+        <div data-reveal style="padding:38px 30px;background:var(--paper);transition:background .3s" style-hover="background:var(--ink);color:#fff">
+          <div style="font-family:Sora,sans-serif;font-size:14px;font-weight:700;color:var(--accent)">04</div>
+          <h3 style="margin-top:16px;font-size:21px;font-weight:600">Transparenz</h3>
+          <p style="margin-top:12px;font-size:15.5px;line-height:1.65;color:var(--muted)">Jeder Kunde verdient einen transparenten und fairen Preis. Deshalb sind alle unsere Preise offen und ehrlich kommuniziert – Sie wissen immer genau, was Sie bezahlen und warum.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="kontakt" style="position:relative;padding:120px 28px 70px;background:var(--ink);color:#fff;overflow:hidden">
+    <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(100% 80% at 20% 0%,#000,transparent 70%)"></div>
+    <div style="position:relative;max-width:1240px;margin:0 auto">
+      <div data-reveal style="display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:end;padding-bottom:70px;border-bottom:1px solid rgba(255,255,255,.10)">
+        <div>
+          <h2 style="font-size:clamp(32px,3.6vw,50px);line-height:1.1;font-weight:700">Nutzen Sie jetzt die Chance auf individuelle Beratung</h2>
+          <a href="mailto:info@nexo-it.de" style="margin-top:34px;display:inline-flex;align-items:center;gap:12px;padding:18px 32px;border-radius:14px;background:var(--accent);color:#fff;font-weight:700;font-size:16px;box-shadow:0 16px 40px rgba(10,92,255,.4);transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-3px);box-shadow:0 22px 52px rgba(10,92,255,.55);color:#fff">Kontakt aufnehmen <span style="font-size:19px">→</span></a>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+          <a href="tel:015141289974" style="padding:24px 22px;border-radius:16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#fff;transition:background .25s,transform .25s" style-hover="background:rgba(255,255,255,.12);transform:translateY(-3px);color:#fff">
+            <div style="font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55)">Telefon</div>
+            <div style="margin-top:8px;font-family:Sora,sans-serif;font-size:19px;font-weight:600">0151 / 412 899 74</div>
+          </a>
+          <a href="https://wa.me/49015141289974" style="padding:24px 22px;border-radius:16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#fff;transition:background .25s,transform .25s" style-hover="background:rgba(255,255,255,.12);transform:translateY(-3px);color:#fff">
+            <div style="font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55)">WhatsApp</div>
+            <div style="margin-top:8px;font-family:Sora,sans-serif;font-size:19px;font-weight:600">0151 / 412 899 74</div>
+          </a>
+          <a href="mailto:info@nexo-it.de" style="padding:24px 22px;border-radius:16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#fff;transition:background .25s,transform .25s" style-hover="background:rgba(255,255,255,.12);transform:translateY(-3px);color:#fff">
+            <div style="font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55)">E-Mail</div>
+            <div style="margin-top:8px;font-family:Sora,sans-serif;font-size:17px;font-weight:600">info@nexo-it.de</div>
+          </a>
+          <div style="padding:24px 22px;border-radius:16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12)">
+            <div style="font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55)">Öffnungszeiten</div>
+            <div style="margin-top:8px;font-size:15px;line-height:1.6">Mo–Do: 08:00 – 17:00 Uhr<br>Fr: 08:00 – 15:00 Uhr</div>
+          </div>
+        </div>
+      </div>
+      <div style="padding-top:36px;display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:14px">
+          <span style="display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:var(--accent)">
+            <svg width="18" height="18" viewBox="0 0 96 96" aria-hidden="true"><path d="M30.7 69.1 L30.7 28.8 L36.5 28.8 L65.3 59.5 L65.3 28.8" stroke="#fff" stroke-width="8.6" fill="none" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="65.3" cy="28.8" r="6.7" fill="#fff"></circle></svg>
+          </span>
+          <span style="font-family:Sora,sans-serif;font-size:18px;font-weight:600">Nexo<span style="font-weight:800;color:var(--accent-soft)">IT</span></span>
+          <span style="font-size:14px;color:rgba(255,255,255,.45)">Mit uns in die Zukunft</span>
+        </div>
+        <div style="display:flex;gap:26px;font-size:14px;color:rgba(255,255,255,.45)">
+          <span>www.nexo-it.de</span>
+          <a href="#impressum" style="color:rgba(255,255,255,.6)" style-hover="color:#fff">Impressum</a>
+          <a href="#datenschutz" style="color:rgba(255,255,255,.6)" style-hover="color:#fff">Datenschutz</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#0A5CFF&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#0A5CFF&quot;,&quot;#0F3DDB&quot;,&quot;#1D9BF0&quot;,&quot;#0EA47A&quot;],&quot;section&quot;:&quot;Marke&quot;},&quot;showMarquee&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Layout&quot;},&quot;animations&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Layout&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() {
+    const root = this.el || document;
+    if (this.props.accentColor) {
+      document.documentElement.style.setProperty('--accent', this.props.accentColor);
+    }
+    const animate = this.props.animations !== false
+      && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const candidates = (() => {
+      const list = [];
+      let n = document.querySelector('[data-reveal]');
+      while (n && n.parentElement) {
+        n = n.parentElement;
+        const o = getComputedStyle(n).overflowY;
+        if ((o === 'auto' || o === 'scroll') && n.scrollHeight > n.clientHeight + 4) list.push(n);
+      }
+      return list;
+    })();
+    const scrollTop = () => Math.max(
+      window.scrollY || 0,
+      document.documentElement.scrollTop || 0,
+      ...candidates.map((c) => c.scrollTop || 0)
+    );
+    const onAnyScroll = (fn) => {
+      window.addEventListener('scroll', fn, { passive: true, capture: true });
+      document.addEventListener('scroll', fn, { passive: true, capture: true });
+      candidates.forEach((c) => c.addEventListener('scroll', fn, { passive: true }));
+      return () => {
+        window.removeEventListener('scroll', fn, { capture: true });
+        document.removeEventListener('scroll', fn, { capture: true });
+        candidates.forEach((c) => c.removeEventListener('scroll', fn));
+      };
+    };
+
+    const items = Array.from(document.querySelectorAll('[data-reveal]'));
+    const revealAll = () => items.forEach((el) => { el.style.opacity = '1'; el.style.transform = 'none'; });
+
+    if (animate && 'IntersectionObserver' in window) {
+      items.forEach((el, i) => {
+        const fly = el.getAttribute('data-fly');
+        const dur = fly ? .85 : .7;
+        el.style.opacity = '0';
+        el.style.transform = fly === 'left' ? 'translateX(-90px)'
+          : fly === 'right' ? 'translateX(90px)'
+          : fly === 'y' ? 'translateY(60px)'
+          : 'translateY(26px)';
+        const d = (i % 3) * 0.08;
+        el.style.transition = 'opacity ' + dur + 's cubic-bezier(.2,.7,.2,1) ' + d + 's, transform ' + dur + 's cubic-bezier(.16,.84,.24,1) ' + d + 's';
+      });
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.style.opacity = '1';
+            e.target.style.transform = 'none';
+            io.unobserve(e.target);
+          }
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.01 });
+      items.forEach((el) => io.observe(el));
+      this._io = io;
+
+      let fired = false;
+      const io2 = new IntersectionObserver((e) => { if (e.length) { fired = true; io2.disconnect(); } });
+      if (items[0]) io2.observe(items[0]);
+      this._safety = setTimeout(() => { if (!fired) revealAll(); }, 1500);
+
+      const nearReveal = () => {
+        const h = window.innerHeight;
+        items.forEach((el) => {
+          if (el.style.opacity === '1') return;
+          const r = el.getBoundingClientRect();
+          if (r.top < h * 0.94 && r.bottom > -80) { el.style.opacity = '1'; el.style.transform = 'none'; }
+        });
+      };
+      this._offReveal = onAnyScroll(nearReveal);
+      requestAnimationFrame(nearReveal);
+    }
+
+    const bar = document.querySelector('[data-progress]');
+    const orbits = document.querySelector('[data-orbits]');
+    if (bar || orbits) {
+      this._scroll = () => {
+        const top = scrollTop();
+        const heights = [document.documentElement.scrollHeight - window.innerHeight]
+          .concat(candidates.map((c) => c.scrollHeight - c.clientHeight));
+        const max = Math.max.apply(null, heights);
+        if (bar) bar.style.width = (max > 0 ? Math.min(100, (top / max) * 100) : 0) + '%';
+        if (orbits && animate && orbits.style.opacity !== '0') orbits.style.transform = 'translateY(' + (-top * 0.05) + 'px)';
+      };
+      this._offScroll = onAnyScroll(this._scroll);
+      this._scroll();
+    }
+
+    const header = document.querySelector('header');
+    if (header && animate) {
+      const dots = [];
+      for (let i = 0; i < 14; i++) {
+        const d = document.createElement('span');
+        d.style.cssText = 'position:absolute;left:0;top:0;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:radial-gradient(circle,#8FB6FF,rgba(10,92,255,0) 70%);opacity:0;pointer-events:none;z-index:1;transition:opacity .5s linear';
+        header.appendChild(d);
+        dots.push(d);
+      }
+      let idx = 0, last = 0;
+      this._trail = (ev) => {
+        const now = performance.now();
+        if (now - last < 28) return;
+        last = now;
+        const r = header.getBoundingClientRect();
+        const d = dots[idx = (idx + 1) % dots.length];
+        const s = 0.5 + Math.random() * 1.4;
+        d.style.transition = 'none';
+        d.style.transform = 'translate(' + (ev.clientX - r.left) + 'px,' + (ev.clientY - r.top) + 'px) scale(' + s + ')';
+        d.style.opacity = '.95';
+        requestAnimationFrame(() => {
+          d.style.transition = 'opacity .7s linear, transform .7s ease-out';
+          d.style.opacity = '0';
+          d.style.transform = 'translate(' + (ev.clientX - r.left) + 'px,' + (ev.clientY - r.top - 12) + 'px) scale(' + (s * 2.1) + ')';
+        });
+      };
+      header.addEventListener('pointermove', this._trail);
+      this._header = header;
+    }
+
+    const glow = document.querySelector('[data-glow]');
+    if (glow && animate) {
+      this._move = (ev) => {
+        const x = (ev.clientX / window.innerWidth - 0.5) * 90;
+        const y = (ev.clientY / window.innerHeight - 0.5) * 60;
+        glow.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0)';
+      };
+      window.addEventListener('mousemove', this._move, { passive: true });
+    }
+  }
+  componentWillUnmount() {
+    if (this._io) this._io.disconnect();
+    if (this._safety) clearTimeout(this._safety);
+    if (this._offScroll) this._offScroll();
+    if (this._offReveal) this._offReveal();
+    if (this._header && this._trail) this._header.removeEventListener('pointermove', this._trail);
+    if (this._move) window.removeEventListener('mousemove', this._move);
+  }
+  renderVals() {
+    return { showMarquee: this.props.showMarquee !== false };
+  }
+}
+
+</script>
+</body>
+</html>

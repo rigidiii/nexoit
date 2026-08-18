@@ -1,0 +1,24 @@
+# Abhängigkeiten und Build-Artefakte
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+
+# Laufzeitdaten – enthalten Kontaktanfragen und Besucherstatistik.
+# Gehören ins Backup, aber niemals ins Repository.
+data/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Zugangsdaten und Schlüssel. Nur .env.example wird versioniert.
+.env
+.env.*
+!.env.example
+
+# Betriebssystem
+.DS_Store
+Thumbs.db
+desktop.ini

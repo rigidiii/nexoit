@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <radialGradient id="glow" cx="52%" cy="18%" r="62%">
+      <stop offset="0%" stop-color="#0A5CFF" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#0A5CFF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="shine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="10%" stop-color="#FFFFFF"/>
+      <stop offset="52%" stop-color="#8FB6FF"/>
+      <stop offset="95%" stop-color="#FFFFFF"/>
+    </linearGradient>
+    <pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse">
+      <path d="M64 0H0v64" fill="none" stroke="#FFFFFF" stroke-opacity="0.05" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="630" fill="#14161A"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <g transform="translate(88,84)">
+    <rect width="72" height="72" rx="18" fill="#0A5CFF"/>
+    <g transform="translate(36,36) scale(0.6) translate(-48,-48)">
+      <path d="M30.7 69.1 L30.7 28.8 L36.5 28.8 L65.3 59.5 L65.3 28.8" stroke="#FFFFFF" stroke-width="8.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="65.3" cy="28.8" r="6.7" fill="#FFFFFF"/>
+    </g>
+    <text x="96" y="50" font-family="Sora, Segoe UI, Arial, sans-serif" font-size="38" font-weight="600" fill="#FFFFFF" letter-spacing="-0.8">Nexo<tspan font-weight="800" fill="#4E8CFF">IT</tspan></text>
+  </g>
+
+  <text x="88" y="330" font-family="Sora, Segoe UI, Arial, sans-serif" font-size="92" font-weight="700" fill="url(#shine)" letter-spacing="-2">IT einfach</text>
+  <text x="88" y="428" font-family="Sora, Segoe UI, Arial, sans-serif" font-size="92" font-weight="700" fill="url(#shine)" letter-spacing="-2">und sicher.</text>
+
+  <text x="88" y="500" font-family="Manrope, Segoe UI, Arial, sans-serif" font-size="27" fill="#FFFFFF" fill-opacity="0.72">Serverhosting · WebHosting · Webseiten · Backup · SEO · IT-Service</text>
+
+  <g transform="translate(88,548)">
+    <rect width="252" height="52" rx="26" fill="#0A5CFF"/>
+    <text x="126" y="34" text-anchor="middle" font-family="Manrope, Segoe UI, Arial, sans-serif" font-size="20" font-weight="700" fill="#FFFFFF">www.nexo-it.de</text>
+  </g>
+
+  <g fill="none" stroke="#FFFFFF" stroke-opacity="0.12">
+    <circle cx="960" cy="315" r="210"/>
+    <circle cx="960" cy="315" r="150" stroke-dasharray="6 8"/>
+  </g>
+  <circle cx="960" cy="105" r="9" fill="#4E8CFF"/>
+  <circle cx="960" cy="465" r="7" fill="#3BE39A"/>
+  <circle cx="960" cy="315" r="90" fill="#0A5CFF" fill-opacity="0.16"/>
+  <g transform="translate(960,315)">
+    <rect x="-56" y="-56" width="112" height="112" rx="30" fill="#0A5CFF"/>
+    <g transform="scale(0.62) translate(-48,-48)">
+      <path d="M30.7 69.1 L30.7 28.8 L36.5 28.8 L65.3 59.5 L65.3 28.8" stroke="#FFFFFF" stroke-width="8.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="65.3" cy="28.8" r="6.7" fill="#FFFFFF"/>
+    </g>
+  </g>
+</svg>
