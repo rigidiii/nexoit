@@ -28,7 +28,7 @@ const manrope = Manrope({
   display: 'swap',
 });
 
-const siteUrl = process.env.SITE_URL || 'https://www.nexo-it.de';
+const siteUrl = process.env.SITE_URL || 'https://www.nexoit.de';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

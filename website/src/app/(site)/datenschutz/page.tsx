@@ -8,7 +8,7 @@ import CookieSettingsLink from '@/components/CookieSettingsLink';
 export const metadata: Metadata = {
   title: 'Datenschutzerklärung',
   description:
-    'Informationen zur Verarbeitung personenbezogener Daten nach Art. 13 DSGVO auf www.nexo-it.de.',
+    'Informationen zur Verarbeitung personenbezogener Daten nach Art. 13 DSGVO auf www.nexoit.de.',
   robots: { index: true, follow: true },
   alternates: { canonical: '/datenschutz' },
 };

@@ -169,14 +169,28 @@ beschriebene Punkt-Spur im Header bleibt davon unberührt und ist unverändert u
 
 ## Betrieb
 
+**Installation auf aaPanel: → [`deploy/AAPANEL.md`](deploy/AAPANEL.md)**
+(Schritt-für-Schritt inkl. nginx, PM2, SSL, Sicherung und Fehlersuche).
+
 ```bash
 npm run build
-npm start          # Port 3000
+npm start          # lauscht auf 127.0.0.1:3000
 ```
 
-Voraussetzung ist eine Node-Umgebung (Node 20+); ein statischer Export ist wegen
-Datenbank und Mailversand nicht möglich. Hinter einem Reverse-Proxy `TRUST_PROXY=1`
-setzen, sonst zählt die Statistik alle Besuche auf die Proxy-IP.
+Voraussetzung ist eine Node-Umgebung (Node 20.9+); ein statischer Export ist wegen
+Datenbank und Mailversand nicht möglich. Der Server bindet bewusst nur an
+`127.0.0.1` – der Zugriff läuft ausschließlich über den Reverse-Proxy. Dort muss
+`TRUST_PROXY=1` gesetzt sein, sonst zählt die Statistik alle Besuche auf die
+Proxy-IP.
+
+Weitere Dateien im Ordner `deploy/`:
+
+| Datei | Zweck |
+|---|---|
+| `AAPANEL.md` | vollständige Installationsanleitung |
+| `nginx-nexoit.conf` | Reverse-Proxy-Block für die Hauptdomain |
+| `nginx-redirect-nexo-it.conf` | 301-Weiterleitung von nexo-it.de |
+| `../ecosystem.config.cjs` | PM2-Prozesskonfiguration |
 
 **Sicherung:** Die gesamte Anwendungsdatenbank liegt in `data/nexo.db` (plus
 `-wal`/`-shm` im laufenden Betrieb). Für ein konsistentes Backup:

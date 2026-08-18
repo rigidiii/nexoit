@@ -63,7 +63,7 @@ export async function submitContact(
   formData: FormData,
 ): Promise<ContactState> {
   const headerList = await headers();
-  const hash = ipHash(new Request('https://nexo-it.de', { headers: headerList }));
+  const hash = ipHash(new Request('http://localhost', { headers: headerList }));
 
   // 1. Honeypot – ein für Menschen unsichtbares Feld wurde ausgefüllt.
   if (clean(formData.get('website'), 100)) {
@@ -135,7 +135,7 @@ export async function submitContact(
     // Die Anfrage liegt im Postfach des Admin-Bereichs. Trotzdem ehrlich
     // sagen, dass der Mailversand nicht funktioniert hat.
     return fail(
-      'Ihre Nachricht konnte nicht per E-Mail zugestellt werden. Bitte kontaktieren Sie uns direkt unter 0151 / 412 899 74 oder info@nexo-it.de.',
+      'Ihre Nachricht konnte nicht per E-Mail zugestellt werden. Bitte kontaktieren Sie uns direkt unter 0151 / 412 899 74 oder info@nexoit.de.',
     );
   }
 

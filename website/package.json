@@ -3,12 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "description": "Unternehmenswebseite Nexo IT (www.nexo-it.de) inkl. Admin-Backend fuer SMTP und Besucherstatistik",
+  "engines": {
+    "node": ">=20.9.0"
+  },
   "scripts": {
     "dev": "next dev -p 3000",
     "build": "next build",
-    "start": "next start -p 3000",
-    "lint": "next lint",
-    "admin:reset": "node scripts/reset-admin.mjs"
+    "start": "next start -H 127.0.0.1 -p 3000",
+    "lint": "next lint"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",

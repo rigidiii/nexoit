@@ -83,7 +83,7 @@ export async function sendContactMail(
   }
 
   const lines = [
-    'Neue Anfrage über das Kontaktformular auf www.nexo-it.de',
+    'Neue Anfrage über das Kontaktformular auf www.nexoit.de',
     '',
     `Name:     ${payload.name}`,
     `E-Mail:   ${payload.email}`,

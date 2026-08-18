@@ -1,6 +1,27 @@
 /** @type {import('next').NextConfig} */
 const isDev = process.env.NODE_ENV === 'development';
 
+// Canonical-URLs und Open-Graph-Tags der statischen Seiten werden beim Build
+// festgeschrieben. Steht SITE_URL zu diesem Zeitpunkt falsch, verweist die
+// Seite dauerhaft auf die falsche Adresse – ohne dass es jemandem auffällt.
+// Deshalb hier ein deutlicher Hinweis statt eines stillen Fehlers.
+// (robots.txt und sitemap.xml lesen den Wert bei jedem Abruf neu.)
+if (!isDev) {
+  const siteUrl = process.env.SITE_URL;
+  if (!siteUrl) {
+    console.warn(
+      '\n[nexo-it] Hinweis: SITE_URL ist nicht gesetzt. Es wird https://www.nexoit.de verwendet.\n',
+    );
+  } else if (/localhost|127\.0\.0\.1/.test(siteUrl)) {
+    console.warn(
+      `\n[nexo-it] ACHTUNG: SITE_URL steht auf "${siteUrl}".\n` +
+        '          Canonical-Tags und Open-Graph-Angaben der Seite werden damit auf\n' +
+        '          localhost zeigen. Vor dem Build in der .env die echte Domain\n' +
+        '          eintragen und danach neu bauen.\n',
+    );
+  }
+}
+
 // Selbst gehostete Fonts, kein externer Request -> keine Drittland-Uebermittlung.
 // 'unsafe-inline' fuer Styles ist noetig, weil Next inline-Styles fuer die
 // Font-Optimierung und das kritische CSS ausliefert.

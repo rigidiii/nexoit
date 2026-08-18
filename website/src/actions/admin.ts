@@ -30,7 +30,7 @@ import type { AdminActionState } from '@/lib/admin-state';
 
 async function currentIpHash(): Promise<string> {
   const headerList = await headers();
-  return ipHash(new Request('https://nexo-it.de', { headers: headerList }));
+  return ipHash(new Request('http://localhost', { headers: headerList }));
 }
 
 function ok(message: string): AdminActionState {

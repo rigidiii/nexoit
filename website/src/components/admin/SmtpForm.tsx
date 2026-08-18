@@ -239,7 +239,7 @@ export default function SmtpForm({ values }: { values: SmtpFormValues }) {
                 className="ad-input"
                 value={form.fromEmail}
                 onChange={(e) => set('fromEmail', e.target.value)}
-                placeholder="noreply@nexo-it.de"
+                placeholder="noreply@nexoit.de"
                 required
               />
               <span className="ad-field__hint">

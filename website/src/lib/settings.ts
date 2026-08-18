@@ -38,12 +38,12 @@ export const SMTP_DEFAULTS: SmtpSettings = {
   password: '',
   fromName: 'Nexo IT Webseite',
   fromEmail: '',
-  toEmail: 'info@nexo-it.de',
+  toEmail: 'info@nexoit.de',
   replyToSender: true,
   autoReply: true,
   autoReplySubject: 'Ihre Anfrage bei Nexo IT',
   autoReplyBody:
-    'Guten Tag {{name}},\n\nvielen Dank für Ihre Nachricht. Wir haben Ihre Anfrage erhalten und melden uns in der Regel innerhalb eines Werktages bei Ihnen.\n\nIhre Nachricht:\n{{message}}\n\nMit freundlichen Grüßen\nIhr Team von Nexo IT\n\n--\nNexo IT · www.nexo-it.de · info@nexo-it.de\nTelefon 0151 / 412 899 74',
+    'Guten Tag {{name}},\n\nvielen Dank für Ihre Nachricht. Wir haben Ihre Anfrage erhalten und melden uns in der Regel innerhalb eines Werktages bei Ihnen.\n\nIhre Nachricht:\n{{message}}\n\nMit freundlichen Grüßen\nIhr Team von Nexo IT\n\n--\nNexo IT · www.nexoit.de · info@nexoit.de\nTelefon 0151 / 412 899 74',
   allowInvalidCert: false,
 };
 
