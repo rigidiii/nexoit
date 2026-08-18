@@ -1,10 +1,39 @@
 import 'server-only';
 
+import fs from 'node:fs';
+import path from 'node:path';
 import nodemailer from 'nodemailer';
 
 import { getSmtpSettings, isSmtpConfigured, type SmtpSettings } from './settings';
+import { LOGO_CID, anfrageHtml, autoReplyHtml, testMailHtml } from './mail-template';
 
 /** Versand über den im Admin hinterlegten SMTP-Server. */
+
+const LOGO_PFAD = path.join(process.cwd(), 'public', 'mail', 'logo-icon.png');
+
+/**
+ * Das Logo reist als Anhang mit und wird im HTML über `cid:` eingebunden.
+ *
+ * Der Umweg über den Anhang statt einer Bild-Adresse ist Absicht: Fast alle
+ * Mailprogramme blockieren nachgeladene Bilder, bis der Empfänger zustimmt –
+ * die Mail käme also zunächst ohne Logo an. Ausserdem verrät ein nachgeladenes
+ * Bild dem Absender, wann und wo die Mail geöffnet wurde; genau das wollen wir
+ * bei einer Eingangsbestätigung nicht.
+ *
+ * Fehlt die Datei (etwa weil `scripts/build-mail-logo.mjs` nie lief), geht die
+ * Mail ohne Anhang hinaus statt den Versand scheitern zu lassen.
+ */
+function logoAnhang() {
+  if (!fs.existsSync(LOGO_PFAD)) return [];
+  return [
+    {
+      filename: 'nexo-it.png',
+      path: LOGO_PFAD,
+      cid: LOGO_CID,
+      contentDisposition: 'inline' as const,
+    },
+  ];
+}
 
 export interface ContactPayload {
   name: string;
@@ -56,16 +85,21 @@ export async function sendTestMail(
   if (!isSmtpConfigured(s)) {
     return { ok: false, error: 'Host, Absender- und Empfängeradresse müssen ausgefüllt sein.' };
   }
+  const beschreibung =
+    `Server: ${s.host}:${s.port} (${s.secure ? 'TLS' : s.requireTls ? 'STARTTLS' : 'unverschlüsselt'})\n` +
+    `Zeitpunkt: ${new Date().toLocaleString('de-DE')}`;
+
   try {
     await buildTransport(s).sendMail({
       from: fromAddress(s),
       to: s.toEmail,
       subject: 'Testmail von der Nexo-IT-Webseite',
       text:
-        'Diese Testmail wurde im Admin-Bereich der Nexo-IT-Webseite ausgelöst.\n' +
+        'Diese Testmail wurde im Verwaltungsbereich der Nexo-IT-Webseite ausgelöst.\n' +
         'Wenn Sie sie erhalten, funktioniert der SMTP-Versand des Kontaktformulars.\n\n' +
-        `Server: ${s.host}:${s.port} (${s.secure ? 'TLS' : s.requireTls ? 'STARTTLS' : 'unverschlüsselt'})\n` +
-        `Zeitpunkt: ${new Date().toLocaleString('de-DE')}`,
+        beschreibung,
+      html: testMailHtml(beschreibung),
+      attachments: logoAnhang(),
     });
     return { ok: true };
   } catch (err) {
@@ -104,12 +138,20 @@ export async function sendContactMail(
       replyTo: s.replyToSender ? `"${payload.name.replace(/"/g, '')}" <${payload.email}>` : undefined,
       subject: `Kontaktanfrage: ${payload.subject}`,
       text: lines.join('\n'),
+      html: anfrageHtml(payload),
+      attachments: logoAnhang(),
     });
   } catch (err) {
     return { ok: false, error: describeError(err) };
   }
 
   if (s.autoReply) {
+    const ersetzungen = {
+      name: payload.name,
+      betreff: payload.subject,
+      message: payload.message,
+    };
+
     // Eine fehlgeschlagene Eingangsbestätigung darf die Anfrage nicht
     // scheitern lassen – die Nachricht ist ja bereits zugestellt.
     try {
@@ -117,10 +159,12 @@ export async function sendContactMail(
         from: fromAddress(s),
         to: payload.email,
         subject: s.autoReplySubject,
-        text: s.autoReplyBody
-          .replaceAll('{{name}}', payload.name)
-          .replaceAll('{{betreff}}', payload.subject)
-          .replaceAll('{{message}}', payload.message),
+        text: Object.entries(ersetzungen).reduce(
+          (text, [schluessel, wert]) => text.split(`{{${schluessel}}}`).join(wert),
+          s.autoReplyBody,
+        ),
+        html: autoReplyHtml(s.autoReplyBody, ersetzungen),
+        attachments: logoAnhang(),
       });
     } catch {
       /* bewusst ignoriert */
