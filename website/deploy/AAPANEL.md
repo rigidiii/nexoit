@@ -264,6 +264,47 @@ Was sich gegenüber der Standardfassung ändert:
 | `ssl_protocols` ohne `TLSv1.1` | seit RFC 8996 überholt |
 | `add_header Strict-Transport-Security` entfernt | den Header setzt die Anwendung selbst, sonst kommt er doppelt |
 | `include enable-php-00.conf;` entfernt | es läuft kein PHP |
+| eigene Location `^~ /.well-known/acme-challenge/` | ohne sie verschluckt der Proxy die Zertifikatsprüfung – siehe unten |
+
+### Warum die Zertifikatsprüfung eine eigene Regel braucht
+
+`location ^~ /` fängt jede Anfrage ab. Das `^~` weist nginx an, nach diesem
+Präfix-Treffer gar nicht mehr nach regulären Ausdrücken zu suchen – die von
+aaPanel mitgelieferte Regel `location ~ \.well-known` wird dadurch nie
+erreicht. Die Prüfanfrage landet bei Node, das den Pfad nicht kennt, und
+Let's Encrypt bekommt einen 404:
+
+```
+Invalid response from http://www.nexoit.de/.well-known/acme-challenge/…: 404
+```
+
+Die eigene Präfix-Location löst das, weil nginx unter den Präfix-Treffern den
+längsten wählt – `/.well-known/acme-challenge/` schlägt `/`. Das eigene `root`
+darin ist nötig, weil das Wurzelverzeichnis des Servers auf `website/public`
+zeigt, aaPanel die Prüfdatei aber im Website-Verzeichnis der Site ablegt.
+
+Diese Regel ist nicht nur für den ersten Antrag nötig: Ohne sie scheitert auch
+jede automatische Verlängerung nach 60 Tagen, und das Zertifikat läuft
+unbemerkt ab.
+
+Wenn die Prüfung trotzdem scheitert, zeigen diese drei Befehle, woran es liegt:
+
+```bash
+# 1. Welcher vHost beantwortet www? (Markdown-Klammern im server_name?)
+nginx -T 2>/dev/null | grep -n "server_name.*nexoit"
+
+# 2. Was liefert der Server aktuell aus?
+curl -I http://www.nexoit.de/
+#    502 = Proxy aktiv, Node läuft noch nicht  → normal vor Schritt 7
+#    404 = Anfrage landet auf einer anderen Site oder bei Node
+#    200 = irgendetwas anderes beantwortet die Domain
+
+# 3. Kommt die Prüfdatei durch?
+mkdir -p /www/wwwroot/nexoit.de/.well-known/acme-challenge
+echo test > /www/wwwroot/nexoit.de/.well-known/acme-challenge/probe
+curl -s http://www.nexoit.de/.well-known/acme-challenge/probe   # erwartet: test
+rm -f /www/wwwroot/nexoit.de/.well-known/acme-challenge/probe
+```
 
 Zu den beiden gelöschten Regex-Blöcken: Sie liefern `.js`, `.css` und Bilder
 direkt von der Festplatte aus. Bei einer Next.js-Anwendung liegt dort aber

@@ -22,3 +22,7 @@ data/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Von Let's Encrypt/aaPanel waehrend der Zertifikatspruefung im
+# Website-Verzeichnis abgelegt
+.well-known/
