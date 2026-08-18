@@ -361,11 +361,12 @@ Diese Punkte sind noch offen und gehören erledigt, bevor die Seite beworben wir
    bauen).
 3. **SMTP hinterlegen** unter `/admin/smtp`, dann „Verbindung prüfen" und
    „Testmail senden".
-4. **Demo-Statistik löschen:** Verwaltung → Einstellungen → „Alle
-   Statistikdaten löschen". Im Repository liegen Beispieldaten aus der
-   Entwicklung.
-5. **Admin-Passwort ändern** unter `/admin/einstellungen`. Danach wirkt
-   `ADMIN_INITIAL_PASSWORD` nicht mehr.
+4. **Admin-Passwort ändern** unter `/admin/einstellungen`. Danach wirkt
+   `ADMIN_INITIAL_PASSWORD` nicht mehr, und das Startpasswort verschwindet aus
+   der Shell-Historie des Servers.
+5. Die Datenbank auf dem Server startet leer – `data/` ist vom Repository
+   ausgenommen. Die Beispieldaten aus `scripts/seed-demo-stats.mjs` existieren
+   nur auf dem Entwicklungsrechner und kommen nicht mit.
 6. Kontrolle: `https://www.nexoit.de/robots.txt` und `/sitemap.xml` müssen die
    richtige Domain nennen. Tun sie das nicht, stimmt `SITE_URL` nicht.
 

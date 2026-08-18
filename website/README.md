@@ -46,10 +46,10 @@ node -e "console.log(require('crypto').randomBytes(48).toString('base64url'))"
    markiert: `src/app/(site)/impressum/page.tsx` und `src/app/(site)/datenschutz/page.tsx`.
    Ein unvollständiges Impressum ist abmahnfähig – bitte anwaltlich prüfen lassen.
 2. **SMTP hinterlegen** unter `/admin/smtp`, danach „Verbindung prüfen" und „Testmail senden".
-3. **Demo-Statistik löschen:** Verwaltung → Einstellungen → „Alle Statistikdaten löschen".
-   Die mitgelieferte Entwicklungsdatenbank enthält Beispieldaten aus
-   `scripts/seed-demo-stats.mjs`.
-4. **Admin-Passwort ändern** unter `/admin/einstellungen`.
+3. **Admin-Passwort ändern** unter `/admin/einstellungen`.
+4. Nur auf dem Entwicklungsrechner: **Demo-Statistik löschen** über Verwaltung →
+   Einstellungen → „Alle Statistikdaten löschen". Auf dem Server entsteht die Frage
+   nicht – `data/` ist vom Repository ausgenommen, die Datenbank startet dort leer.
 5. **301-Weiterleitungen** von `maass-it-solution.de` auf die entsprechenden Ziele
    einrichten (Punkt 4 der offenen Punkte im Handoff).
 6. `data/` und `.env` gehören **nicht** ins Repository und dürfen **nicht** per HTTP
