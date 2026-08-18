@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { company, nav } from '@/content/site';
 import { NexoMark } from './Icons';
@@ -14,9 +14,12 @@ import { NexoMark } from './Icons';
  * Voraussetzung ist `overflow: hidden` am Header und `z-index: 2` auf der
  * Inhaltszeile (siehe globals.css).
  *
- * Unter 768 px klappt die Navigation als Panel auf; der Telefon-CTA bleibt
- * immer sichtbar. Das Burger-Menü ist im Design nicht enthalten und hier
- * ergänzt (siehe Handoff, "Offene Punkte", Punkt 2).
+ * Unter 768 px zeigt der Header nur Logo und Telefon-CTA. Die Anker-Navigation
+ * entfällt dort bewusst: Auf einem Onepager scrollt man ohnehin, und ein
+ * Klapp-Menü liesse sich mit dem `overflow: hidden` der Cursor-Spur nur über
+ * Umwege vereinbaren – das Panel läge unterhalb der Kopfzeile und würde
+ * abgeschnitten. Die Abschnitte bleiben über die Buttons im Hero und den
+ * Seitenfuss erreichbar.
  */
 
 const TRAIL_DOTS = 14;
@@ -24,7 +27,6 @@ const TRAIL_THROTTLE_MS = 28;
 
 export default function Header() {
   const headerRef = useRef<HTMLElement | null>(null);
-  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const header = headerRef.current;
@@ -76,20 +78,6 @@ export default function Header() {
     };
   }, []);
 
-  // Menü schließen, sobald auf Desktop-Breite gewechselt wird.
-  useEffect(() => {
-    if (!menuOpen) return;
-    const mq = window.matchMedia('(min-width: 768px)');
-    const close = () => setMenuOpen(false);
-    mq.addEventListener('change', close);
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setMenuOpen(false);
-    window.addEventListener('keydown', onKey);
-    return () => {
-      mq.removeEventListener('change', close);
-      window.removeEventListener('keydown', onKey);
-    };
-  }, [menuOpen]);
-
   return (
     <header className="nx-header nx-dark" ref={headerRef}>
       <div className="nx-header__bar">
@@ -102,18 +90,9 @@ export default function Header() {
           </span>
         </Link>
 
-        <nav
-          id="hauptnavigation"
-          className={`nx-nav${menuOpen ? ' is-open' : ''}`}
-          aria-label="Hauptnavigation"
-        >
+        <nav className="nx-nav" aria-label="Hauptnavigation">
           {nav.map((item) => (
-            <Link
-              key={item.href}
-              href={`/${item.href}`}
-              className="nx-nav__link"
-              onClick={() => setMenuOpen(false)}
-            >
+            <Link key={item.href} href={`/${item.href}`} className="nx-nav__link">
               {item.label}
             </Link>
           ))}
@@ -124,21 +103,6 @@ export default function Header() {
           <span className="nx-sr">Anrufen: </span>
           {company.phoneDisplay}
         </a>
-
-        <button
-          type="button"
-          className="nx-burger"
-          aria-expanded={menuOpen}
-          aria-controls="hauptnavigation"
-          aria-label={menuOpen ? 'Menü schließen' : 'Menü öffnen'}
-          onClick={() => setMenuOpen((open) => !open)}
-        >
-          <span className="nx-burger__box" aria-hidden="true">
-            <i />
-            <i />
-            <i />
-          </span>
-        </button>
       </div>
     </header>
   );

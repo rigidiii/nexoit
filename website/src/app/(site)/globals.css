@@ -367,45 +367,7 @@ svg {
   color: #fff;
 }
 
-/* Burger – im Design nicht vorhanden, für < 768 px ergänzt. */
-.nx-burger {
-  display: none;
-  /* flex: 0 0 44px, damit der Button als Flex-Kind nicht unter das
-     Mindest-Touch-Target von 44 px schrumpft. */
-  flex: 0 0 44px;
-  width: 44px;
-  height: 44px;
-  padding: 0;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 12px;
-  background: transparent;
-  color: #fff;
-  cursor: pointer;
-  place-items: center;
-}
-.nx-burger__box {
-  display: grid;
-  gap: 5px;
-  width: 18px;
-}
-.nx-burger__box i {
-  display: block;
-  height: 2px;
-  background: #fff;
-  border-radius: 2px;
-  transition:
-    transform 0.25s var(--ease-out),
-    opacity 0.2s;
-}
-.nx-burger[aria-expanded='true'] .nx-burger__box i:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
-}
-.nx-burger[aria-expanded='true'] .nx-burger__box i:nth-child(2) {
-  opacity: 0;
-}
-.nx-burger[aria-expanded='true'] .nx-burger__box i:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg);
-}
+/* Ein Klapp-Menü gibt es bewusst nicht – siehe Kommentar im Responsive-Teil. */
 
 /* --------------------------------------------------------------------------
    7. Hero
@@ -1603,57 +1565,25 @@ button[disabled],
     scroll-padding-top: 76px;
   }
 
-  /* Navigation als eingeblendetes Panel; der Telefon-CTA bleibt sichtbar. */
+  /* Kopfzeile mobil: nur Logo und Telefon-CTA.
+     Die Anker-Navigation entfällt hier bewusst. Ein Klapp-Menü müsste als
+     Panel unterhalb der Kopfzeile liegen – und würde vom `overflow: hidden`
+     des Headers abgeschnitten, das die Cursor-Spur benötigt. Auf einem
+     Onepager wiegt das wenig: Die Abschnitte sind über die Buttons im Hero
+     und über den Seitenfuss erreichbar, und gescrollt wird ohnehin. */
   .nx-header__bar {
     gap: 12px;
     padding: 12px var(--gutter);
   }
-  .nx-burger {
-    display: grid;
-    margin-left: auto;
-    order: 3;
+  .nx-nav {
+    display: none;
   }
   .nx-header .nx-pill {
-    order: 2;
     margin-left: auto;
     /* Mindesthöhe 44 px als Touch-Target, ohne die Pill zu breit zu machen. */
     min-height: 44px;
     padding: 10px 14px;
     font-size: 14px;
-  }
-  .nx-nav {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    margin: 0;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-    padding: 8px var(--gutter) 18px;
-    background: rgba(20, 22, 26, 0.98);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    transform: translateY(-8px);
-    opacity: 0;
-    visibility: hidden;
-    transition:
-      opacity 0.22s,
-      transform 0.22s var(--ease-out),
-      visibility 0.22s;
-  }
-  .nx-nav.is-open {
-    opacity: 1;
-    visibility: visible;
-    transform: none;
-  }
-  .nx-nav__link {
-    /* Touch-Target ≥ 44 px */
-    padding: 14px 4px;
-    font-size: 16px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-  }
-  .nx-nav__link:last-child {
-    border-bottom: 0;
   }
 
   .nx-hero {
