@@ -1,0 +1,14 @@
+node_modules
+.next
+data
+.env
+.env.*
+!.env.example
+.git
+.claude
+deploy
+ecosystem.config.cjs
+Dockerfile
+.dockerignore
+npm-debug.log*
+.DS_Store
