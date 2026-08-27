@@ -6,7 +6,7 @@ import type { ServiceIcon } from '@/content/site';
  * erben und kein zusätzlicher Request nötig ist.
  */
 
-/** Nexo-„N" aus den Markenassets. Erbt Farbe über `stroke="currentColor"`. */
+/** Nexo-„N“ aus den Markenassets. Erbt Farbe über `stroke="currentColor"`. */
 export function NexoMark({ size = 20 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 96 96" aria-hidden="true" focusable="false">
@@ -65,6 +65,12 @@ const servicePaths: Record<ServiceIcon, React.ReactNode> = {
       <path d="M9 12l2 2 4-4" />
     </>
   ),
+  code: (
+    <>
+      <path d="M8 6l-6 6 6 6M16 6l6 6-6 6" />
+      <path d="M13.5 4l-3 16" />
+    </>
+  ),
 };
 
 export function ServiceIconSvg({ name }: { name: ServiceIcon }) {
@@ -80,11 +86,12 @@ export function ServiceIconSvg({ name }: { name: ServiceIcon }) {
  * Datenbank. Gleicher Zeichenstil wie die Leistungs-Icons, damit die Grafik
  * nicht wie ein Fremdkörper wirkt.
  */
-export type OrbitIcon = 'server' | 'network' | 'cloud' | 'shield' | 'database';
+export type OrbitIcon = 'server' | 'network' | 'cloud' | 'shield' | 'database' | 'code';
 
 const orbitPaths: Record<OrbitIcon, React.ReactNode> = {
   server: servicePaths.server,
   shield: servicePaths.shield,
+  code: servicePaths.code,
   network: (
     <>
       <circle cx="12" cy="4.5" r="2" />
@@ -107,6 +114,42 @@ export function OrbitIconSvg({ name }: { name: OrbitIcon }) {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false" {...strokeProps}>
       {orbitPaths[name]}
+    </svg>
+  );
+}
+
+/** Icons für die Kontakt-Karten (Telefon, WhatsApp, E-Mail, Öffnungszeiten). */
+export function PhoneIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false" {...strokeProps}>
+      <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.13.96.36 1.9.7 2.8a2 2 0 0 1-.45 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.45c.9.34 1.84.57 2.8.7a2 2 0 0 1 1.7 2.05z" />
+    </svg>
+  );
+}
+
+export function WhatsAppIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false" {...strokeProps}>
+      <path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L3 21l1.9-5.6A8.5 8.5 0 1 1 21 11.5z" />
+      <path d="M9.5 9.5c.5 2.5 2.5 4.5 5 5l1-1.2c.2-.3.6-.4.9-.2l1.6 1" />
+    </svg>
+  );
+}
+
+export function MailIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false" {...strokeProps}>
+      <rect x="2" y="4" width="20" height="16" rx="2" />
+      <path d="m22 7-10 6L2 7" />
+    </svg>
+  );
+}
+
+export function ClockIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false" {...strokeProps}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7v5l3 2" />
     </svg>
   );
 }
