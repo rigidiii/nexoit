@@ -6,6 +6,7 @@ export const CONTACT_SUBJECTS = [
   'Backup Service',
   'SEO',
   'IT Dienstleistungen',
+  'Programmierung',
   'Allgemeine Anfrage',
 ] as const;
 
