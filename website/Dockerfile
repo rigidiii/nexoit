@@ -34,8 +34,12 @@ RUN npm run build
 # --- Laufzeit ---------------------------------------------------------------
 FROM node:22-bookworm-slim AS runner
 WORKDIR /app
+# APP_SECRET wird aus der Build-Stufe uebernommen (Dummy fuer Preview/CI);
+# in Produktion unbedingt per -e APP_SECRET=... ueberschreiben.
+ARG APP_SECRET=docker-build-dummy-mindestens-32-zeichen
 ENV NODE_ENV=production \
-    NEXT_TELEMETRY_DISABLED=1
+    NEXT_TELEMETRY_DISABLED=1 \
+    APP_SECRET=$APP_SECRET
 COPY --from=build /app/package.json ./
 COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/.next ./.next
