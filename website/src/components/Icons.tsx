@@ -6,7 +6,7 @@ import type { ServiceIcon } from '@/content/site';
  * erben und kein zusätzlicher Request nötig ist.
  */
 
-/** Nexo-„N“ aus den Markenassets. Erbt Farbe über `stroke="currentColor"`. */
+/** Nexo-„N" aus den Markenassets. Erbt Farbe über `stroke="currentColor"`. */
 export function NexoMark({ size = 20 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 96 96" aria-hidden="true" focusable="false">
