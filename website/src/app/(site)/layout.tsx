@@ -68,8 +68,13 @@ export const metadata: Metadata = {
     images: ['/og.svg'],
   },
   icons: {
-    icon: [{ url: '/icon.svg', type: 'image/svg+xml' }],
-    apple: '/icon.svg',
+    // SVG zuerst (in jeder Größe scharf), PNG-Fallbacks erzeugt `prebuild`
+    // (scripts/build-icons.mjs) aus demselben Master-Mark.
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/favicon-32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: '/apple-touch-icon.png',
   },
   robots: { index: true, follow: true },
 };

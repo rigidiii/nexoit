@@ -33,7 +33,7 @@ export default async function AdminAuthLayout({ children }: { children: React.Re
   return (
     <div className="ad__shell">
       <aside className="ad__side">
-        <Link href="/admin" className="ad__brand" style={{ textDecoration: 'none', color: '#fff' }}>
+        <Link href="/admin" className="ad__brand" style={{ textDecoration: 'none', color: 'var(--ad-text)' }}>
           <span className="ad__brand-mark">
             <NexoMark size={24} />
           </span>
@@ -47,7 +47,7 @@ export default async function AdminAuthLayout({ children }: { children: React.Re
 
         <div className="ad__side-foot">
           <div>
-            Angemeldet als <strong style={{ color: '#fff' }}>{user.username}</strong>
+            Angemeldet als <strong style={{ color: 'var(--ad-text)' }}>{user.username}</strong>
           </div>
           <Link href="/" target="_blank" rel="noopener">
             Webseite ansehen ↗

@@ -12,7 +12,7 @@ export const company = {
   domain: 'www.nexoit.de',
   email: 'info@nexoit.de',
   phoneDisplay: '0151 / 412 899 74',
-  phoneHref: 'tel:+49015141289974',
+  phoneHref: 'tel:015141289974',
   phoneE164: '+4915141289974',
   whatsapp: 'https://wa.me/49015141289974',
   hours: ['Mo–Do: 08:00 – 17:00 Uhr', 'Fr: 08:00 – 15:00 Uhr'],

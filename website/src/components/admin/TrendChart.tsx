@@ -158,7 +158,7 @@ export default function TrendChart({ data }: { data: TrendPoint[] }) {
               cy={y(data[hover]![s.key])}
               r="5"
               fill={s.color}
-              stroke="#fff"
+              stroke="#101B30"
               strokeWidth="2"
             />
           ))}
@@ -201,8 +201,9 @@ export default function TrendChart({ data }: { data: TrendPoint[] }) {
             left: `${(x(hover) / W) * 100}%`,
             top: 34,
             transform: `translateX(${hover > data.length / 2 ? '-105%' : '5%'})`,
-            background: '#14161a',
-            color: '#fff',
+            background: '#0B1424',
+            color: '#EAF1FB',
+            border: '1px solid rgba(148,178,220,0.28)',
             padding: '10px 13px',
             borderRadius: 10,
             fontSize: 13,

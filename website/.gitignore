@@ -10,3 +10,8 @@ data/
 .env.local
 next-env.d.ts
 *.tsbuildinfo
+
+# Vom prebuild erzeugte Grafiken (scripts/build-icons.mjs, build-mail-logo.mjs)
+public/favicon-32.png
+public/apple-touch-icon.png
+public/mail/logo-icon.png
