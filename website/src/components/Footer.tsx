@@ -20,7 +20,7 @@ export default function Footer() {
               aria-label={`${company.name} – zur Startseite`}
             >
               <span className="nx-footer__mark" style={{ color: '#06232E' }}>
-                <NexoMark size={18} />
+                <NexoMark size={24} />
               </span>
               <span className="nx-footer__word">
                 Nexo<b>IT</b>
