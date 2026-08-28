@@ -108,7 +108,7 @@ export default function Hero() {
           </div>
           <div className="nx-orbit nx-orbit--disc" />
           <div className="nx-orbit__core" style={{ color: '#06232E' }}>
-            <NexoMark size={52} />
+            <NexoMark size={80} />
             <span />
           </div>
 
