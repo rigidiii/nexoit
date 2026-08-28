@@ -149,7 +149,7 @@ export default function TrendChart({ data }: { data: TrendPoint[] }) {
           />
         ))}
 
-        {/* Marker am Cursor – 2px weißer Ring, damit sie sich überlagern dürfen */}
+        {/* Marker am Cursor – dunkler Ring passend zur Kartenfläche */}
         {hover !== null &&
           SERIES.map((s) => (
             <circle
