@@ -28,7 +28,7 @@ export default async function LoginPage() {
       <div className="ad-login__box">
         <div className="ad-login__brand">
           <span className="ad__brand-mark">
-            <NexoMark size={18} />
+            <NexoMark size={24} />
           </span>
           <span className="ad__brand-word">
             Nexo<b>IT</b>
