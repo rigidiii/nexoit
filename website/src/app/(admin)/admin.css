@@ -1,33 +1,43 @@
 /* ==========================================================================
-   Verwaltungsbereich – eigenes, schlankes Stylesheet.
-   Nutzt dieselben Marken-Tokens wie die Webseite, aber ein ruhigeres Layout.
+   Verwaltungsbereich – dunkles Design im Look der Webseite
+   (tiefes Navy #070D18 + Electric Cyan #22D3EE, Sora + Inter).
+   Gleiche Marken-Tokens wie (site)/globals.css, ruhigere Flächenhierarchie.
    ========================================================================== */
 
 .ad {
-  --ad-bg: #f5f7fa;
-  --ad-surface: #ffffff;
-  --ad-line: rgba(20, 22, 26, 0.12);
-  --ad-line-soft: rgba(20, 22, 26, 0.07);
-  --ad-text: #14161a;
-  --ad-muted: #5c6270;
-  --ad-accent: #0a5cff;
-  --ad-accent-soft: #4e8cff;
-  --ad-ok: #0f8a5f;
-  --ad-warn: #a35a00;
-  --ad-error: #c0322f;
+  --ad-bg: #070d18;
+  --ad-bg-soft: #0b1424;
+  --ad-surface: #101b30;
+  --ad-surface-2: #14223c;
+  --ad-line: rgba(148, 178, 220, 0.14);
+  --ad-line-soft: rgba(148, 178, 220, 0.08);
+  --ad-line-strong: rgba(148, 178, 220, 0.28);
+  --ad-text: #eaf1fb;
+  --ad-muted: #a7b4c9;
+  --ad-faint: #6b7a92;
+  --ad-accent: #22d3ee;
+  --ad-accent-soft: #67e8f9;
+  --ad-accent-ink: #06232e;
+  --ad-accent-tint: rgba(34, 211, 238, 0.1);
+  --ad-accent-border: rgba(34, 211, 238, 0.35);
+  --ad-ok: #34d399;
+  --ad-warn: #f0a020;
+  --ad-error: #f87171;
   --ad-radius: 14px;
 
-  /* Diagrammfarben – validiert gegen weiße Fläche (CVD-Abstand 31.8) */
-  --viz-series-1: #0a5cff;
-  --viz-series-2: #eb6834;
-  --viz-grid: rgba(20, 22, 26, 0.08);
-  --viz-axis: #8b909c;
+  /* Diagrammfarben – auf dunkler Fläche: Cyan + warmes Orange */
+  --viz-series-1: #22d3ee;
+  --viz-series-2: #f59e0b;
+  --viz-grid: rgba(148, 178, 220, 0.12);
+  --viz-axis: #6b7a92;
 
   min-height: 100vh;
   background: var(--ad-bg);
   color: var(--ad-text);
-  font-family: var(--font-manrope), system-ui, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
   font-size: 15px;
+  /* Native Bedienelemente (Checkboxen, Scrollbars) im Dark-Modus. */
+  color-scheme: dark;
 }
 
 .ad h1,
@@ -42,6 +52,10 @@
   color: var(--ad-accent);
 }
 
+::selection {
+  background: rgba(34, 211, 238, 0.32);
+}
+
 /* --- Grundgerüst ---------------------------------------------------------- */
 .ad__shell {
   display: grid;
@@ -50,8 +64,9 @@
 }
 
 .ad__side {
-  background: #14161a;
-  color: #fff;
+  background: var(--ad-bg-soft);
+  border-right: 1px solid var(--ad-line);
+  color: var(--ad-text);
   padding: 22px 18px;
   display: flex;
   flex-direction: column;
@@ -72,9 +87,10 @@
   place-items: center;
   width: 34px;
   height: 34px;
-  border-radius: 10px;
+  border-radius: 6px; /* 18 % – Logo-Design-PDF */
   background: var(--ad-accent);
-  color: #fff;
+  color: var(--ad-accent-ink);
+  box-shadow: 0 4px 16px rgba(34, 211, 238, 0.35);
   flex: 0 0 auto;
 }
 .ad__brand-word {
@@ -84,16 +100,16 @@
 }
 .ad__brand-word b {
   font-weight: 800;
-  color: var(--ad-accent-soft);
+  color: var(--ad-accent);
 }
 .ad__brand-sub {
   display: block;
-  font-family: var(--font-manrope), sans-serif;
+  font-family: var(--font-inter), sans-serif;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.45);
+  color: var(--ad-faint);
 }
 
 .ad__nav {
@@ -106,49 +122,51 @@
   gap: 11px;
   padding: 11px 13px;
   border-radius: 10px;
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--ad-muted);
   font-size: 15px;
   font-weight: 500;
   text-decoration: none;
   transition: background 0.18s, color 0.18s;
 }
 .ad__nav a:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: #fff;
+  background: rgba(148, 178, 220, 0.08);
+  color: var(--ad-text);
 }
 .ad__nav a[aria-current='page'] {
   background: var(--ad-accent);
-  color: #fff;
+  color: var(--ad-accent-ink);
 }
 .ad__nav-badge {
   margin-left: auto;
   min-width: 22px;
   padding: 2px 7px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(148, 178, 220, 0.16);
+  color: var(--ad-text);
   font-size: 12px;
   font-weight: 700;
   text-align: center;
 }
 .ad__nav a[aria-current='page'] .ad__nav-badge {
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(6, 35, 46, 0.25);
+  color: var(--ad-accent-ink);
 }
 
 .ad__side-foot {
   margin-top: auto;
   padding-top: 18px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid var(--ad-line);
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.45);
+  color: var(--ad-faint);
   display: grid;
   gap: 10px;
 }
 .ad__side-foot a {
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--ad-muted);
   text-decoration: none;
 }
 .ad__side-foot a:hover {
-  color: #fff;
+  color: var(--ad-accent);
 }
 
 .ad__main {
@@ -218,7 +236,7 @@
   font-weight: 700;
   letter-spacing: 0.09em;
   text-transform: uppercase;
-  color: var(--ad-muted);
+  color: var(--ad-faint);
 }
 .ad-kpi__value {
   margin-top: 10px;
@@ -227,6 +245,7 @@
   font-weight: 700;
   line-height: 1;
   font-variant-numeric: tabular-nums;
+  color: var(--ad-text);
 }
 .ad-kpi__delta {
   margin-top: 9px;
@@ -254,9 +273,9 @@
   gap: 9px;
   padding: 9px 15px;
   border-radius: 999px;
-  background: rgba(15, 138, 95, 0.1);
-  border: 1px solid rgba(15, 138, 95, 0.3);
-  color: #0b6f4c;
+  background: rgba(52, 211, 153, 0.12);
+  border: 1px solid rgba(52, 211, 153, 0.35);
+  color: #8ff0c8;
   font-size: 14px;
   font-weight: 600;
 }
@@ -264,7 +283,8 @@
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  background: #0f8a5f;
+  background: var(--ad-ok);
+  box-shadow: 0 0 10px rgba(52, 211, 153, 0.8);
 }
 
 /* Zeitraum-Auswahl */
@@ -286,13 +306,13 @@
   transition: border-color 0.18s, color 0.18s;
 }
 .ad-filters a:hover {
-  border-color: var(--ad-accent-soft);
+  border-color: var(--ad-accent-border);
   color: var(--ad-accent);
 }
 .ad-filters a[aria-current='true'] {
   background: var(--ad-accent);
   border-color: var(--ad-accent);
-  color: #fff;
+  color: var(--ad-accent-ink);
 }
 
 /* --- Diagramme ------------------------------------------------------------ */
@@ -364,6 +384,7 @@
   border-radius: 4px;
   background: var(--viz-series-1);
   min-width: 3px;
+  box-shadow: 0 0 10px rgba(34, 211, 238, 0.35);
 }
 
 .ad-empty {
@@ -373,7 +394,7 @@
   font-size: 14.5px;
   line-height: 1.6;
   background: var(--ad-surface);
-  border: 1px dashed var(--ad-line);
+  border: 1px dashed var(--ad-line-strong);
   border-radius: var(--ad-radius);
 }
 
@@ -402,8 +423,8 @@
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--ad-muted);
-  background: #fafbfc;
+  color: var(--ad-faint);
+  background: var(--ad-surface-2);
   white-space: nowrap;
 }
 .ad-table tr:last-child td {
@@ -459,7 +480,7 @@
 .ad-field__hint {
   font-size: 12.5px;
   line-height: 1.5;
-  color: var(--ad-muted);
+  color: var(--ad-faint);
 }
 .ad-input,
 .ad-select,
@@ -467,19 +488,30 @@
   width: 100%;
   padding: 11px 13px;
   border-radius: 10px;
-  border: 1px solid var(--ad-line);
-  background: #fff;
+  border: 1px solid var(--ad-line-strong);
+  background: rgba(7, 13, 24, 0.55);
   color: var(--ad-text);
   font-family: inherit;
   font-size: 15px;
   line-height: 1.45;
+  transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.ad-input:hover,
+.ad-select:hover,
+.ad-textarea:hover {
+  background: rgba(7, 13, 24, 0.75);
 }
 .ad-input:focus,
 .ad-select:focus,
 .ad-textarea:focus {
-  outline: 2px solid var(--ad-accent-soft);
-  outline-offset: 1px;
-  border-color: var(--ad-accent-soft);
+  outline: none;
+  border-color: var(--ad-accent);
+  background: rgba(7, 13, 24, 0.75);
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.35);
+}
+.ad-select option {
+  background: var(--ad-surface);
+  color: var(--ad-text);
 }
 .ad-textarea {
   min-height: 150px;
@@ -505,7 +537,7 @@
   display: block;
   margin-top: 3px;
   font-size: 12.5px;
-  color: var(--ad-muted);
+  color: var(--ad-faint);
 }
 
 .ad-actions {
@@ -527,32 +559,35 @@
   font-weight: 600;
   cursor: pointer;
   text-decoration: none;
-  transition: background 0.18s, border-color 0.18s, color 0.18s;
+  transition: background 0.18s, border-color 0.18s, color 0.18s, box-shadow 0.18s;
 }
 .ad-btn--primary {
   background: var(--ad-accent);
-  color: #fff;
+  color: var(--ad-accent-ink);
+  box-shadow: 0 8px 24px rgba(34, 211, 238, 0.25);
 }
 .ad-btn--primary:hover {
-  background: #0a4fd8;
-  color: #fff;
+  background: var(--ad-accent-soft);
+  color: var(--ad-accent-ink);
+  box-shadow: 0 0 24px rgba(34, 211, 238, 0.35);
 }
 .ad-btn--ghost {
-  background: #fff;
-  border-color: var(--ad-line);
+  background: transparent;
+  border-color: var(--ad-line-strong);
   color: var(--ad-text);
 }
 .ad-btn--ghost:hover {
-  border-color: var(--ad-accent-soft);
+  border-color: var(--ad-accent);
   color: var(--ad-accent);
+  background: var(--ad-accent-tint);
 }
 .ad-btn--danger {
-  background: #fff;
-  border-color: rgba(192, 50, 47, 0.4);
+  background: transparent;
+  border-color: rgba(248, 113, 113, 0.4);
   color: var(--ad-error);
 }
 .ad-btn--danger:hover {
-  background: rgba(192, 50, 47, 0.08);
+  background: rgba(248, 113, 113, 0.1);
   color: var(--ad-error);
 }
 .ad-btn[disabled] {
@@ -568,24 +603,24 @@
   border: 1px solid;
 }
 .ad-note--ok {
-  background: rgba(15, 138, 95, 0.09);
-  border-color: rgba(15, 138, 95, 0.35);
-  color: #0b6f4c;
+  background: rgba(52, 211, 153, 0.12);
+  border-color: rgba(52, 211, 153, 0.45);
+  color: #8ff0c8;
 }
 .ad-note--error {
-  background: rgba(192, 50, 47, 0.08);
-  border-color: rgba(192, 50, 47, 0.35);
-  color: #97231f;
+  background: rgba(248, 113, 113, 0.12);
+  border-color: rgba(248, 113, 113, 0.45);
+  color: #ffb9b9;
 }
 .ad-note--warn {
-  background: rgba(163, 90, 0, 0.09);
-  border-color: rgba(163, 90, 0, 0.35);
-  color: #7a4400;
+  background: rgba(240, 162, 32, 0.1);
+  border-color: rgba(240, 162, 32, 0.4);
+  color: #f5c66b;
 }
 .ad-note--info {
-  background: #f1f5ff;
-  border-color: rgba(10, 92, 255, 0.25);
-  color: #123a91;
+  background: var(--ad-accent-tint);
+  border-color: var(--ad-accent-border);
+  color: var(--ad-muted);
 }
 
 .ad-pill {
@@ -600,20 +635,20 @@
   white-space: nowrap;
 }
 .ad-pill--ok {
-  background: rgba(15, 138, 95, 0.12);
-  color: #0b6f4c;
+  background: rgba(52, 211, 153, 0.14);
+  color: #8ff0c8;
 }
 .ad-pill--error {
-  background: rgba(192, 50, 47, 0.12);
-  color: #97231f;
+  background: rgba(248, 113, 113, 0.14);
+  color: #ffb9b9;
 }
 .ad-pill--neutral {
-  background: rgba(20, 22, 26, 0.07);
+  background: rgba(148, 178, 220, 0.12);
   color: var(--ad-muted);
 }
 .ad-pill--new {
-  background: rgba(10, 92, 255, 0.12);
-  color: #0a4fd8;
+  background: rgba(34, 211, 238, 0.14);
+  color: var(--ad-accent-soft);
 }
 
 /* --- Anmeldung ------------------------------------------------------------ */
@@ -623,16 +658,17 @@
   place-items: center;
   padding: 40px 20px;
   background:
-    radial-gradient(120% 90% at 50% 0%, rgba(10, 92, 255, 0.28), transparent 62%),
-    #14161a;
+    radial-gradient(120% 90% at 50% 0%, rgba(34, 211, 238, 0.22), transparent 62%),
+    var(--ad-bg);
 }
 .ad-login__box {
   width: 100%;
   max-width: 420px;
-  background: #fff;
+  background: var(--ad-surface);
+  border: 1px solid var(--ad-line);
   border-radius: 20px;
   padding: 34px 32px;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
 }
 .ad-login__brand {
   display: flex;
@@ -655,7 +691,7 @@
   padding-top: 16px;
   border-top: 1px solid var(--ad-line-soft);
   font-size: 13px;
-  color: var(--ad-muted);
+  color: var(--ad-faint);
 }
 
 /* --- Nachrichten ---------------------------------------------------------- */
@@ -682,7 +718,7 @@
 }
 .ad-msg__meta {
   font-size: 13px;
-  color: var(--ad-muted);
+  color: var(--ad-faint);
   display: flex;
   flex-wrap: wrap;
   gap: 8px 14px;
@@ -714,6 +750,8 @@
     position: static;
     height: auto;
     flex-direction: column;
+    border-right: 0;
+    border-bottom: 1px solid var(--ad-line);
   }
   .ad__nav {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
