@@ -35,7 +35,7 @@ export default async function AdminAuthLayout({ children }: { children: React.Re
       <aside className="ad__side">
         <Link href="/admin" className="ad__brand" style={{ textDecoration: 'none', color: '#fff' }}>
           <span className="ad__brand-mark">
-            <NexoMark size={18} />
+            <NexoMark size={24} />
           </span>
           <span className="ad__brand-word">
             Nexo<b>IT</b>
