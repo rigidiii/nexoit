@@ -230,7 +230,7 @@ export default function DatenschutzPage() {
 
           <h2>8. Schriftarten</h2>
           <p>
-            Wir verwenden die Schriftarten „Sora" und „Manrope". Diese werden ausschließlich von
+            Wir verwenden die Schriftarten „Sora" und „Inter". Diese werden ausschließlich von
             unserem eigenen Server geladen. Eine Verbindung zu Servern von Google oder anderen
             Anbietern findet dabei nicht statt, es wird keine IP-Adresse an Dritte übermittelt.
           </p>

@@ -21,8 +21,9 @@ export const LOGO_CID = 'nexoit-logo';
 
 const FARBE = {
   ink: '#14161A',
-  accent: '#0A5CFF',
-  accentSoft: '#4E8CFF',
+  navy: '#070D18', // Kopfband: Seiten-Hintergrund
+  accent: '#0E7490', // Links/Akzente auf Weiss: tiefes Cyan (--color-accent-deep)
+  accentSoft: '#22D3EE', // Akzent auf dem dunklen Kopfband: Electric Cyan
   paper: '#FFFFFF',
   paper2: '#F5F7FA',
   muted: '#5C6270',
@@ -134,12 +135,12 @@ export function mailHtml({ vorschau, titel, koerper, signatur }: MailInhalt): st
 
     <!-- Kopfband -->
     <tr>
-    <td style="background-color:${FARBE.ink};padding:22px 28px;">
+    <td style="background-color:${FARBE.navy};padding:22px 28px;">
       <table role="presentation" cellpadding="0" cellspacing="0" border="0">
       <tr>
         <td style="padding-right:13px;vertical-align:middle;">
           <img src="cid:${LOGO_CID}" width="44" height="44" alt="Nexo IT"
-               style="display:block;width:44px;height:44px;border:0;border-radius:12px;">
+               style="display:block;width:44px;height:44px;border:0;border-radius:8px;">
         </td>
         <td style="vertical-align:middle;">
           <span style="font-family:${SCHRIFT};font-size:21px;font-weight:600;color:#FFFFFF;letter-spacing:-0.3px;">Nexo</span><span style="font-family:${SCHRIFT};font-size:21px;font-weight:700;color:${FARBE.accentSoft};letter-spacing:-0.3px;">IT</span>

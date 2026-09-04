@@ -1,5 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 100 100">
-  <rect x="0" y="0" width="100" height="100" rx="22" fill="#0A5CFF"></rect>
-  <path d="M32 72 L32 30 L38 30 L68 62 L68 30" stroke="#FFFFFF" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
-  <circle cx="68" cy="30" r="7" fill="#FFFFFF"></circle>
+  <!-- Master-Mark: Electric-Cyan-Kasten (#22D3EE), dunkles N (#06232E),
+       Eckenradius 18 % (Logo-Design-PDF), N fuellt 71 % des Kastens (Variante B). -->
+  <rect x="0" y="0" width="100" height="100" rx="18" fill="#22D3EE"/>
+  <g transform="translate(50,50) scale(0.71) translate(-48,-48)">
+    <path d="M30.7 69.1 L30.7 28.8 L36.5 28.8 L65.3 59.5 L65.3 28.8" stroke="#06232E" stroke-width="8.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="65.3" cy="28.8" r="6.7" fill="#06232E"/>
+  </g>
 </svg>

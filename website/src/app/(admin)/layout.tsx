@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Manrope, Sora } from 'next/font/google';
+import { Inter, Sora } from 'next/font/google';
 
 import '../(site)/globals.css';
 import './admin.css';
@@ -14,6 +14,7 @@ import './admin.css';
  *
  * Das öffentliche Stylesheet wird mitgeladen, weil der Admin dessen
  * Schrift-Variablen und Hilfsklassen (z. B. `.nx-sr`) verwendet.
+ * Schriften wie auf der Webseite: Sora (Anzeige) + Inter (Fließtext).
  */
 
 const sora = Sora({
@@ -23,10 +24,10 @@ const sora = Sora({
   display: 'swap',
 });
 
-const manrope = Manrope({
+const inter = Inter({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
-  variable: '--font-manrope',
+  variable: '--font-inter',
   display: 'swap',
 });
 
@@ -36,14 +37,14 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#14161A',
+  themeColor: '#070D18',
   width: 'device-width',
   initialScale: 1,
 };
 
 export default function AdminRootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="de" className={`${sora.variable} ${manrope.variable}`}>
+    <html lang="de" className={`${sora.variable} ${inter.variable}`}>
       <body>
         <div className="ad">{children}</div>
       </body>

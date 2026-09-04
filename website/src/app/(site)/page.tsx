@@ -1,4 +1,5 @@
 import ContactSection from '@/components/ContactSection';
+import Footer from '@/components/Footer';
 import Hero from '@/components/Hero';
 import { About, Marquee, MidCta, Promises, Services, Values } from '@/components/Sections';
 
@@ -18,6 +19,7 @@ export default function HomePage() {
       <Values />
       <Promises />
       <ContactSection />
+      <Footer />
     </>
   );
 }

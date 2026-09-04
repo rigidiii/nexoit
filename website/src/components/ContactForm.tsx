@@ -61,6 +61,20 @@ export default function ContactForm() {
     void loadToken();
   }, []);
 
+  // Klick auf eine Leistungs-Karte belegt den Betreff vor (Event kommt von
+  // den Karten in Sections.tsx, das Scrollen übernimmt der Anker #kontakt).
+  useEffect(() => {
+    const onSelect = (event: Event) => {
+      const subject = (event as CustomEvent<string>).detail;
+      if (CONTACT_SUBJECTS.includes(subject as (typeof CONTACT_SUBJECTS)[number])) {
+        set('subject', subject);
+      }
+    };
+    window.addEventListener('nx:select-service', onSelect);
+    return () => window.removeEventListener('nx:select-service', onSelect);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
     if (state.status === 'idle') return;
     if (state.status === 'ok') {
@@ -118,7 +132,7 @@ export default function ContactForm() {
             aria-describedby={err.name ? 'cf-name-err' : undefined}
           />
           {err.name && (
-            <span id="cf-name-err" className="nx-form__hint" style={{ color: '#ffc9c9' }}>
+            <span id="cf-name-err" className="nx-form__hint nx-form__error">
               {err.name}
             </span>
           )}
@@ -146,7 +160,7 @@ export default function ContactForm() {
             aria-describedby={err.email ? 'cf-email-err' : undefined}
           />
           {err.email && (
-            <span id="cf-email-err" className="nx-form__hint" style={{ color: '#ffc9c9' }}>
+            <span id="cf-email-err" className="nx-form__hint nx-form__error">
               {err.email}
             </span>
           )}
@@ -212,7 +226,7 @@ export default function ContactForm() {
           aria-describedby={err.message ? 'cf-message-err' : undefined}
         />
         {err.message && (
-          <span id="cf-message-err" className="nx-form__hint" style={{ color: '#ffc9c9' }}>
+          <span id="cf-message-err" className="nx-form__hint nx-form__error">
             {err.message}
           </span>
         )}
@@ -232,7 +246,7 @@ export default function ContactForm() {
           verarbeitet werden. Die Einwilligung kann jederzeit per E-Mail widerrufen werden. Weitere
           Informationen in der <Link href="/datenschutz">Datenschutzerklärung</Link>.
           {err.consent && (
-            <strong style={{ display: 'block', color: '#ffc9c9' }}>{err.consent}</strong>
+            <strong className="nx-form__error" style={{ display: 'block' }}>{err.consent}</strong>
           )}
         </span>
       </label>

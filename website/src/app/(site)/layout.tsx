@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Manrope, Sora } from 'next/font/google';
+import { Inter, Sora } from 'next/font/google';
 
 import './globals.css';
 import { company } from '@/content/site';
@@ -9,7 +9,7 @@ import Header from '@/components/Header';
 import SiteEffects from '@/components/SiteEffects';
 
 /**
- * next/font lädt Sora und Manrope zur Bauzeit herunter und liefert sie von der
+ * next/font lädt Sora und Inter zur Bauzeit herunter und liefert sie von der
  * eigenen Domain aus. Es gibt damit keine Verbindung zu Google Fonts im
  * Browser des Besuchers – Voraussetzung für den Betrieb ohne Einwilligung
  * (vgl. LG München I, 20.01.2022 – 3 O 17493/20).
@@ -21,10 +21,10 @@ const sora = Sora({
   display: 'swap',
 });
 
-const manrope = Manrope({
+const inter = Inter({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
-  variable: '--font-manrope',
+  variable: '--font-inter',
   display: 'swap',
 });
 
@@ -33,11 +33,11 @@ const siteUrl = process.env.SITE_URL || 'https://www.nexoit.de';
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Nexo IT – IT einfach und sicher | IT-Dienstleistungen & Hosting',
+    default: 'Nexo IT — IT einfach und sicher. Serverhosting, WebHosting & IT-Services',
     template: '%s | Nexo IT',
   },
   description:
-    'Nexo IT ist Ihr Full-Service-IT-Partner: Serverhosting, WebHosting, Webseiten, Backup Service, SEO und IT-Dienstleistungen. DSGVO-konformes Hosting in der EU, 24/7 Überwachung.',
+    'Nexo IT ist Ihr Full-Service-IT-Partner: Serverhosting, WebHosting, Webseiten, Backup, SEO und IT-Dienstleistungen — DSGVO-konform aus der EU, persönlich und zuverlässig.',
   keywords: [
     'IT Dienstleistungen',
     'Serverhosting',
@@ -68,14 +68,19 @@ export const metadata: Metadata = {
     images: ['/og.svg'],
   },
   icons: {
-    icon: [{ url: '/icon.svg', type: 'image/svg+xml' }],
-    apple: '/icon.svg',
+    // SVG zuerst (in jeder Größe scharf), PNG-Fallbacks erzeugt `prebuild`
+    // (scripts/build-icons.mjs) aus demselben Master-Mark.
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/favicon-32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: '/apple-touch-icon.png',
   },
   robots: { index: true, follow: true },
 };
 
 export const viewport: Viewport = {
-  themeColor: '#14161A',
+  themeColor: '#070D18',
   width: 'device-width',
   initialScale: 1,
 };
@@ -117,6 +122,7 @@ const jsonLd = {
       'Backup Service',
       'SEO',
       'IT Dienstleistungen',
+      'Programmierung',
     ].map((name) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name } })),
   },
 };
@@ -125,7 +131,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     // suppressHydrationWarning: das Inline-Skript unten ergänzt die Klasse `js`,
     // die im serverseitigen Markup noch fehlt.
-    <html lang="de" className={`${sora.variable} ${manrope.variable}`} suppressHydrationWarning>
+    <html lang="de" className={`${sora.variable} ${inter.variable}`} suppressHydrationWarning>
       <head>
         {/* Läuft synchron vor dem ersten Paint und schaltet die Startzustände
             der Scroll-Animationen frei. Ohne JavaScript bleibt die Klasse aus

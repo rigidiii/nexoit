@@ -190,16 +190,16 @@ export default function HeroTrail() {
       // auch keine Punkte oder Nähte an den Stützstellen.
       const outer = ribbonPath(samples, 1);
       if (outer) {
-        ctx.shadowColor = 'rgba(10, 92, 255, 0.9)';
+        ctx.shadowColor = 'rgba(34, 211, 238, 0.9)';
         ctx.shadowBlur = 30;
-        ctx.fillStyle = 'rgba(48, 118, 255, 0.4)';
+        ctx.fillStyle = 'rgba(34, 211, 238, 0.32)';
         ctx.fill(outer);
       }
 
       const core = ribbonPath(samples, 0.34);
       if (core) {
         ctx.shadowBlur = 0;
-        ctx.fillStyle = 'rgba(160, 197, 255, 0.72)';
+        ctx.fillStyle = 'rgba(165, 243, 252, 0.72)';
         ctx.fill(core);
       }
 

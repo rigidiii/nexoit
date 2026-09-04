@@ -1,25 +1,23 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { company, nav } from '@/content/site';
 import { NexoMark } from './Icons';
 
 /**
- * Sticky-Header mit Cursor-Spur.
+ * Fixer Header.
  *
- * Die Spur nutzt einen Pool aus 14 wiederverwendeten Spans (Ring-Buffer),
- * gedrosselt auf 28 ms – exakt wie im Design-Handoff beschrieben.
- * Voraussetzung ist `overflow: hidden` am Header und `z-index: 2` auf der
- * Inhaltszeile (siehe globals.css).
- *
- * Unter 768 px zeigt der Header nur Logo und Telefon-CTA. Die Anker-Navigation
- * entfällt dort bewusst: Auf einem Onepager scrollt man ohnehin, und ein
- * Klapp-Menü liesse sich mit dem `overflow: hidden` der Cursor-Spur nur über
- * Umwege vereinbaren – das Panel läge unterhalb der Kopfzeile und würde
- * abgeschnitten. Die Abschnitte bleiben über die Buttons im Hero und den
- * Seitenfuss erreichbar.
+ * - Startet transparent über dem Hero; nach 24 px Scroll kommen Blur,
+ *   Hintergrund und Hairline dazu (Klasse `is-scrolled`).
+ * - Cursor-Spur: Pool aus 14 wiederverwendeten Spans (Ring-Buffer),
+ *   gedrosselt auf 28 ms. Voraussetzung ist `overflow: hidden` am Header
+ *   und `z-index: 2` auf der Inhaltszeile (siehe globals.css).
+ * - Unter 1024 px ersetzt ein Burger-Button die Anker-Navigation. Das
+ *   Menü liegt als eigenes Overlay AUSSERHALB des <header>-Elements, weil
+ *   `backdrop-filter` am Header fest positionierte Nachkommen sonst an den
+ *   Header binden und das `overflow: hidden` sie abschneiden würde.
  */
 
 const TRAIL_DOTS = 14;
@@ -27,7 +25,34 @@ const TRAIL_THROTTLE_MS = 28;
 
 export default function Header() {
   const headerRef = useRef<HTMLElement | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
+  // Scroll-Zustand: Blur + Border erst nach dem ersten Stück Wegstrecke.
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+    const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // Mobile-Menü: Escape schließt, Hintergrund-Scrollen wird gesperrt.
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMenuOpen(false);
+    };
+    document.addEventListener('keydown', onKey);
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = previous;
+    };
+  }, [menuOpen]);
+
+  // Cursor-Spur im Header (nur Maus, nicht bei reduzierter Bewegung).
   useEffect(() => {
     const header = headerRef.current;
     if (!header) return;
@@ -39,7 +64,7 @@ export default function Header() {
       const dot = document.createElement('span');
       dot.style.cssText =
         'position:absolute;left:0;top:0;width:8px;height:8px;margin:-4px 0 0 -4px;' +
-        'border-radius:50%;background:radial-gradient(circle,#8FB6FF,rgba(10,92,255,0) 70%);' +
+        'border-radius:50%;background:radial-gradient(circle,#67E8F9,rgba(34,211,238,0) 70%);' +
         'opacity:0;pointer-events:none;z-index:1;transition:opacity .5s linear';
       header.appendChild(dot);
       dots.push(dot);
@@ -79,31 +104,89 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="nx-header nx-dark" ref={headerRef}>
-      <div className="nx-header__bar">
-        <Link href="/#top" className="nx-logo" aria-label={`${company.name} – zur Startseite`}>
-          <span className="nx-logo__mark" style={{ color: '#fff' }}>
-            <NexoMark size={20} />
-          </span>
-          <span className="nx-logo__word">
-            Nexo<b>IT</b>
-          </span>
-        </Link>
+    <>
+      <header className="nx-header nx-dark" ref={headerRef}>
+        <div className="nx-header__bar">
+          <Link href="/#top" className="nx-logo" aria-label={`${company.name} – zur Startseite`}>
+            <span className="nx-logo__mark" style={{ color: '#06232E' }}>
+              <NexoMark size={27} />
+            </span>
+            <span className="nx-logo__word">
+              Nexo<b>IT</b>
+            </span>
+          </Link>
 
-        <nav className="nx-nav" aria-label="Hauptnavigation">
-          {nav.map((item) => (
-            <Link key={item.href} href={`/${item.href}`} className="nx-nav__link">
+          <nav className="nx-nav" aria-label="Hauptnavigation">
+            {nav.map((item) => (
+              <Link key={item.href} href={`/${item.href}`} className="nx-nav__link">
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="nx-header__ctas">
+            <a className="nx-header__phone" href={company.phoneHref}>
+              <span aria-hidden="true">☎</span>
+              <span className="nx-header__phone-label">
+                <span className="nx-sr">Anrufen: </span>
+                {company.phoneDisplay}
+              </span>
+            </a>
+            <Link href="/#kontakt" className="nx-header__cta">
+              Kontakt
+            </Link>
+            <button
+              type="button"
+              className={`nx-burger${menuOpen ? ' is-open' : ''}`}
+              aria-expanded={menuOpen}
+              aria-controls="nx-mmenu"
+              aria-label={menuOpen ? 'Menü schließen' : 'Menü öffnen'}
+              onClick={() => setMenuOpen((open) => !open)}
+            >
+              <span />
+              <span />
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Mobile-Menü – bewusst außerhalb des <header> (siehe Kommentar oben). */}
+      <div
+        id="nx-mmenu"
+        className={`nx-mmenu nx-dark${menuOpen ? ' is-open' : ''}`}
+        aria-hidden={!menuOpen}
+      >
+        <nav className="nx-mmenu__nav" aria-label="Mobile Navigation">
+          {nav.map((item, i) => (
+            <Link
+              key={item.href}
+              href={`/${item.href}`}
+              className="nx-mmenu__link"
+              style={{ transitionDelay: menuOpen ? `${80 + i * 60}ms` : '0ms' }}
+              onClick={() => setMenuOpen(false)}
+              tabIndex={menuOpen ? undefined : -1}
+            >
               {item.label}
             </Link>
           ))}
         </nav>
-
-        <a className="nx-pill" href={company.phoneHref}>
-          <span aria-hidden="true">☎</span>
-          <span className="nx-sr">Anrufen: </span>
-          {company.phoneDisplay}
-        </a>
+        <div className="nx-mmenu__footer">
+          <a
+            className="nx-btn nx-btn--primary"
+            href={company.phoneHref}
+            tabIndex={menuOpen ? undefined : -1}
+          >
+            <span aria-hidden="true">☎</span> {company.phoneDisplay}
+          </a>
+          <a
+            className="nx-mmenu__mail"
+            href={`mailto:${company.email}`}
+            tabIndex={menuOpen ? undefined : -1}
+          >
+            Oder schreiben Sie uns: {company.email}
+          </a>
+        </div>
       </div>
-    </header>
+    </>
   );
 }

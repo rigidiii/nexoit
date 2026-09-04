@@ -11,7 +11,8 @@ import { CONSENT_OPEN, readConsent, writeConsent } from '@/lib/consent';
  * Vorgaben, die hier bewusst eingehalten werden (EuGH "Planet49", DSK-Leitlinien):
  *  - "Ablehnen" ist auf derselben Ebene, gleich sichtbar und mit gleich vielen
  *    Klicks erreichbar wie "Akzeptieren".
- *  - Keine Vorauswahl zugunsten einwilligungspflichtiger Verarbeitungen.
+ *  - Keine Vorauswahl zugunsten einwilligungspflichtiger Verarbeitungen –
+ *    der Schalter für die Reichweitenmessung steht anfangs auf "aus".
  *  - Kein Weiterlesen-Zwang: das Banner blockiert die Seite nicht, weil ohne
  *    Einwilligung nichts Einwilligungspflichtiges passiert.
  *  - Die Entscheidung ist jederzeit über den Footer-Link widerrufbar.
@@ -19,7 +20,7 @@ import { CONSENT_OPEN, readConsent, writeConsent } from '@/lib/consent';
 export default function CookieBanner() {
   const [visible, setVisible] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
-  const [analytics, setAnalytics] = useState(true);
+  const [analytics, setAnalytics] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -32,7 +33,7 @@ export default function CookieBanner() {
 
     const reopen = () => {
       const current = readConsent();
-      setAnalytics(current?.analytics ?? true);
+      setAnalytics(current?.analytics ?? false);
       setShowDetails(true);
       setVisible(true);
     };
@@ -63,27 +64,33 @@ export default function CookieBanner() {
       aria-describedby="nx-cookie-text"
     >
       <h2 className="nx-cookie__title" id="nx-cookie-title">
-        Datenschutz-Einstellungen
+        {showDetails ? 'Datenschutz-Einstellungen' : 'Ihre Privatsphäre'}
       </h2>
-      <p className="nx-cookie__text" id="nx-cookie-text">
-        Diese Webseite setzt <strong>keine Werbe- oder Tracking-Cookies</strong> und bindet keine
-        Dienste von Drittanbietern ein. Schriften liefern wir von unserem eigenen Server aus. Für
-        die Reichweitenmessung zählen wir Seitenaufrufe anonym und ohne Cookies. Sie können dieser
-        Messung hier widersprechen. Details in der{' '}
-        <Link href="/datenschutz">Datenschutzerklärung</Link>.
-      </p>
+
+      {!showDetails && (
+        <p className="nx-cookie__text" id="nx-cookie-text">
+          Wir verwenden <strong>keine Werbe- oder Tracking-Cookies</strong> und binden keine
+          Drittanbieter ein. Lediglich eine anonyme Reichweitenmessung hilft uns, unser Angebot zu
+          verbessern — sie setzt keine Cookies und erhebt keine personenbezogenen Daten. Details
+          finden Sie in unserer <Link href="/datenschutz">Datenschutzerklärung</Link>.
+        </p>
+      )}
 
       {showDetails && (
-        <div className="nx-cookie__details">
+        <div className="nx-cookie__details" id="nx-cookie-text">
+          <p className="nx-cookie__text">
+            Hier können Sie Ihre Auswahl anpassen. Technisch notwendige Speicherung ist für den
+            Betrieb der Website erforderlich und immer aktiv.
+          </p>
+
           <div className="nx-cookie__group">
             <div className="nx-cookie__switch">
               <h3>Technisch notwendig</h3>
               <span className="nx-cookie__fixed">Immer aktiv</span>
             </div>
             <p>
-              Speichert diese Auswahl, sichert das Kontaktformular gegen Missbrauch und hält die
-              Anmeldung im internen Verwaltungsbereich. Ohne diese Funktionen ist die Seite nicht
-              nutzbar – dafür ist keine Einwilligung erforderlich.
+              Speichert Ihre Datenschutz-Auswahl und gewährleistet den sicheren Betrieb der
+              Website. Keine Weitergabe an Dritte.
             </p>
           </div>
 
@@ -100,10 +107,9 @@ export default function CookieBanner() {
               />
             </div>
             <p>
-              Eigene Messung auf unserem Server – kein Google Analytics, keine Cookies, keine
-              Weitergabe. Die IP-Adresse wird nicht gespeichert, sondern nur mit einem täglich
-              wechselnden Schlüssel zu einem nicht umkehrbaren Kennzeichen verrechnet. Damit lässt
-              sich niemand über einen Tag hinaus wiedererkennen.
+              Hilft uns zu verstehen, welche Inhalte genutzt werden. Ohne Cookies, ohne
+              IP-Speicherung, ohne personenbezogene Daten. Sie können die Messung jederzeit hier
+              oder über „Datenschutz-Einstellungen“ im Footer deaktivieren.
             </p>
           </div>
         </div>
@@ -122,7 +128,7 @@ export default function CookieBanner() {
           className="nx-cookie__btn nx-cookie__btn--reject"
           onClick={() => decide(false)}
         >
-          Messung ablehnen
+          {showDetails ? 'Alle ablehnen' : 'Messung ablehnen'}
         </button>
         {!showDetails && (
           <button
